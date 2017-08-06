@@ -8,6 +8,4 @@
     <string name="note">Заметка...</string>
     <string name="insert_task">Заметка пустая</string>
     <string name="edit">РЕДАКТИРОВАТЬ</string>
-    <string name="daily_notes">Daily Notes</string>
-
 </resources>
