@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/frame">
-
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,16 +20,13 @@
             android:layout_height="?attr/actionBarSize"
             style="@style/ActionBar"
             app:titleTextColor="@color/colorWhite"
-            app:subtitleTextColor="@color/colorWhite"
-            android:layout_alignParentTop="true" >
+            app:subtitleTextColor="@color/colorWhite">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:descendantFocusability="beforeDescendants"
-                android:focusableInTouchMode="true"
-                >
-
+                android:focusableInTouchMode="true">
                 <EditText
                     android:id="@+id/search"
                     android:layout_width="match_parent"
@@ -44,18 +35,13 @@
                     android:gravity="center_vertical|start"
                     android:drawableRight="@drawable/ic_action_search"
                     android:drawablePadding="5dp"
-                    android:hint="Daily Notes"
+                    android:hint="@string/daily_notes"
                     android:textCursorDrawable="@drawable/cursor"
                     android:textColor="@color/colorWhite"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/text_heading"
                     android:theme="@style/EditStyleForSearch" />
-
             </RelativeLayout>
-
         </android.support.v7.widget.Toolbar>
-
-
-
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -67,14 +53,12 @@
         android:id="@+id/f1"
         android:orientation="vertical">
 
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:scrollbars="vertical" />
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
@@ -86,10 +70,6 @@
         android:layout_margin="17dp"
         android:clickable="true"
         android:src="@drawable/ic_action_add"/>
-
     </RelativeLayout>
-
 </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
-
-</FrameLayout>

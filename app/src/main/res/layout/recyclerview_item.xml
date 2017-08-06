@@ -7,24 +7,32 @@
     android:layout_weight="0.1"
     android:orientation="vertical">
 
-
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="4dp"
-        card_view:cardCornerRadius="1dp"
-        card_view:cardElevation="1dp"
-        card_view:contentPadding="2dp">
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        card_view:cardCornerRadius="@dimen/margin_1dp"
+        card_view:cardElevation="@dimen/margin_1dp"
+        card_view:contentPadding="@dimen/margin_2dp">
+
+        <CheckBox
+            android:id="@+id/task_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_4dp"
+            android:shadowColor="@color/colorPrimary"
+            android:layout_gravity="right|top"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true">
 
@@ -33,40 +41,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="5dp"
-                android:textStyle="bold"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="2dp"
-                android:padding="1dp"
-                android:textColor="@color/colorGrey"
-                android:textSize="16dp"/>
-
-            <CheckBox
-                android:id="@+id/task_checked"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:shadowColor="@color/colorGrey"
-                android:layout_alignParentRight="true" />
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/margin_4dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_subheading"/>
 
             <TextView
                 android:id="@+id/task_item_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_4dp"
                 android:layout_below="@+id/date_item_text_view"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
                 android:textColor="@color/colorGrey"
-                android:textSize="18dp" />
+                android:textSize="@dimen/text_body" />
 
             <ImageView
                 android:id="@+id/loaded_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/task_item_text_view"
+                android:layout_marginBottom="@dimen/margin_4dp"
                 android:layout_centerHorizontal="true" />
 
+            <ImageView
+                android:id="@+id/edit_item"
+                android:src="@drawable/ic_action_edit_note"
+                android:layout_marginLeft="@dimen/margin_4dp"
+                android:layout_marginRight="@dimen/margin_4dp"
+                android:layout_width="@dimen/margin_18dp"
+                android:layout_height="@dimen/margin_18dp"
+                android:layout_below="@+id/loaded_image"
+                android:layout_alignParentLeft="true"  />
+
+            <ImageView
+                android:id="@+id/delete_item"
+                android:src="@drawable/ic_action_delete_note"
+                android:layout_marginLeft="@dimen/margin_4dp"
+                android:layout_marginRight="@dimen/margin_4dp"
+                android:layout_width="@dimen/margin_20dp"
+                android:layout_height="@dimen/margin_20dp"
+                android:layout_below="@+id/loaded_image"
+                android:layout_toRightOf="@id/edit_item" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
 </LinearLayout>

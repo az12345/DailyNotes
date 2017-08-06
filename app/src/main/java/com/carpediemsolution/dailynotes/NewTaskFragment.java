@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
-import com.squareup.leakcanary.RefWatcher;
 import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.sql.SQLException;
@@ -172,8 +171,6 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        RefWatcher refWatcher = TaskApplication.getRefWatcher(getActivity());
-        refWatcher.watch(this);
     }
 }
 

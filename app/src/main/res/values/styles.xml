@@ -1,15 +1,13 @@
 <resources>
-
     <!-- Base application theme. -->
-
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/colorWhite</item>
-        <item name="colorControlActivated">@color/colorGrey</item>
-        <item name="colorControlHighlight">@color/colorGrey</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:colorBackground">@color/colorPrimary</item>
         <item name="windowActionBar">false</item>
@@ -45,6 +43,7 @@
         <item name="android:textColor">@color/colorGrey</item>
     </style>
 
+    <!-- theme of Seaching Widget -->
     <style name="EditStyleForSearch" parent="android:style/Widget.EditText">
         <item name="colorControlNormal">@color/colorPrimaryDark</item>
         <item name="colorControlActivated">@color/colorAccent</item>
@@ -53,35 +52,33 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <!-- theme of AlertDialog -->
     <style name="MyTheme.Dark.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
 
-        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorAccent</item>
         <item name="android:windowTitleStyle">@style/TextAppearance.DialogWindowTitle</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:buttonStyle">@style/Widget.G4S.Button.Borderless</item>
     </style>
 
-
-
+    <!-- theme of  AlertDialog title -->
     <style name="TextAppearance.DialogWindowTitle" parent="@android:style/TextAppearance.Holo.DialogWindowTitle">
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- theme of  AlertDialog buttons -->
     <style name="Widget.G4S.Button.Borderless" parent="@android:style/Widget.Holo.Button.Borderless">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
 </resources>
