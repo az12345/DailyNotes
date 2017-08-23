@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
+import com.carpediemsolution.dailynotes.utils.Constants;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
 
 import java.sql.SQLException;
@@ -34,9 +35,7 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
 
     private static final String LOG_TAG = "EditTaskFragment";
     private Task task;
-    private int id;
 
-    private TasksListFragment tasksListFragment;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -57,7 +56,7 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
             if(task.getTask()!=null){
 
                 HelperFactory.getHelper().getTaskDAO().update(task);
-                tasksListFragment = new TasksListFragment();
+                TasksListFragment tasksListFragment = new TasksListFragment();
                 fragmentManager = getFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
@@ -77,7 +76,7 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
         View view = inflater.inflate(R.layout.new_task_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        id = getArguments().getInt("task_id");
+        int id = getArguments().getInt(Constants.TASK_ID);
         try {
             task = HelperFactory.getHelper().getTaskDAO().getTaskById(id);
         } catch (SQLException e) {

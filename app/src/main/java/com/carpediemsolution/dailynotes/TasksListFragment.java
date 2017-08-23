@@ -26,7 +26,9 @@ import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.presenters.TaskSearchPresenter;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
 import com.carpediemsolution.dailynotes.views.TaskSearchView;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,15 +47,13 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private TasksAdapter adapter;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-
     @BindView(R.id.tool_bar)
     Toolbar mToolbar;
     @BindView(R.id.search)
     EditText searchEditText;
+
     private Unbinder unbinder;
+    private TasksAdapter adapter;
 
     private final String LOG_TAG = "TasksListFragment";
 
@@ -92,8 +92,8 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
     @OnClick(R.id.fab_add)
     public void onNewTaskClick() {
         NewTaskFragment addTask = new NewTaskFragment();
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fromCont, addTask);
         fragmentTransaction.commit();
     }
