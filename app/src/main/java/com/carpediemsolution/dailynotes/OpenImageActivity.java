@@ -16,8 +16,6 @@ import butterknife.ButterKnife;
 
 public class OpenImageActivity extends Activity {
 
-    private String photoUri;
-
     @BindView(R.id.image_big_size)
     ImageView showImage;
 
@@ -32,7 +30,7 @@ public class OpenImageActivity extends Activity {
 
         ButterKnife.bind(this);
 
-        photoUri = getIntent().getStringExtra("uri");
+        String photoUri = getIntent().getStringExtra("uri");
 
         Uri uri = Uri.parse(photoUri);
 

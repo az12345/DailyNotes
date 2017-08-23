@@ -49,7 +49,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVer,
                           int newVer){
         try{
-            //Так делают ленивые, гораздо предпочтительнее не удаляя БД аккуратно вносить изменения
             TableUtils.dropTable(connectionSource, Task.class, true);
             onCreate(db, connectionSource);
         }
@@ -59,7 +58,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    //синглтон для GoalDAO
+    //синглтон для TaskDAO
     public TaskDAO getTaskDAO() throws SQLException {
         if(taskDao == null){
             taskDao = new TaskDAO(getConnectionSource(), Task.class);

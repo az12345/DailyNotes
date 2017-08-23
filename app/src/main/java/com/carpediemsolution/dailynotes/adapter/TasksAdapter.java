@@ -56,13 +56,13 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private class TaskHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
-        TextView dateTextView;
-        TextView taskTextView;
-        CheckBox doneCheckBox;
-        ImageView imageView;
-        ImageView editImageView;
-        ImageView deleteImageView;
+        private CardView cardView;
+        private TextView dateTextView;
+        private TextView taskTextView;
+        private CheckBox doneCheckBox;
+        private ImageView imageView;
+        private ImageView editImageView;
+        private ImageView deleteImageView;
 
         private TaskHolder(View itemView) {
             super(itemView);

@@ -30,8 +30,6 @@ public class Task {
     @DatabaseField(canBeNull = true, dataType = DataType.STRING)
     private String imageUri;
 
-    public Task(){}
-
     public int getId() {
         return Id;
     }
