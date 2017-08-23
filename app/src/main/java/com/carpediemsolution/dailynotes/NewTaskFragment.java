@@ -131,7 +131,7 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
         }
     }
 
-    String[] permissions = new String[]{
+    private String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,};
 

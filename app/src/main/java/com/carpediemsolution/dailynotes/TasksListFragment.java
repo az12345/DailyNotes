@@ -55,7 +55,7 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
     private Unbinder unbinder;
     private TasksAdapter adapter;
 
-    private final String LOG_TAG = "TasksListFragment";
+   // private final String LOG_TAG = "TasksListFragment";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tasks_list_fragment, container, false);

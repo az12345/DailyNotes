@@ -1,11 +1,7 @@
 package com.carpediemsolution.dailynotes;
 
-import com.carpediemsolution.dailynotes.dao.HelperFactory;
-import com.carpediemsolution.dailynotes.model.Task;
-
 import org.junit.Test;
 
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() throws Exception {
+    public void additionIsCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
 
