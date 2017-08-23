@@ -1,6 +1,8 @@
-package com.carpediemsolution.dailynotes;
+package com.carpediemsolution.dailynotes.app;
 
 import android.app.Application;
+import android.content.Context;
+
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 
 /**
@@ -8,11 +10,17 @@ import com.carpediemsolution.dailynotes.dao.HelperFactory;
  */
 
 public class TaskApplication extends Application {
+    private static Context appContext;
+
+    public static Context getAppContext() {
+        return appContext;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         HelperFactory.setHelper(getApplicationContext());
+        appContext = this;
     }
 
     @Override
