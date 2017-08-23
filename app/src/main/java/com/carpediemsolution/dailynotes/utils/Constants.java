@@ -6,4 +6,15 @@ package com.carpediemsolution.dailynotes.utils;
 
 public final class Constants {
     public static final String SORT ="sort";
+
+    public static final String TASK_ID = "task_id";
+
+    public static final String colorOne = "#f2faf3";
+    public static final String colorTwo = "#fffaf0";
+    public static final String colorThree = "#fffafa";
+    public static final String colorFour = "#f0f8ff";
+    public static final String colorFive = "#ededed";
+    public static final String colorSix = "#f8f8ff";
+    public static final String colorSeven = "#f5f3f2";
+    public static final String colorEight = "#e6e6e8";
 }

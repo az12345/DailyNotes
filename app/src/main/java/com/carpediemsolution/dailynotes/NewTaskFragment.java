@@ -113,6 +113,7 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
+                //
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);

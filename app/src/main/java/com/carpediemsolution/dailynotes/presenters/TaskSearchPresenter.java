@@ -53,7 +53,7 @@ public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
                  getViewState().changeDataInRecyclerView(taskList);
             }
         };
-
+       //
         disposable  = //Disposable
                 RxTextView.textChangeEvents(editText) //реагирует на изменение в эдиттекст EditText
                         .debounce(400, TimeUnit.MILLISECONDS) // default Scheduler is Computation
