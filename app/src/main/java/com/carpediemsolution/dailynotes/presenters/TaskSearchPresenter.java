@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.carpediemsolution.dailynotes.app.TaskApplication;
+import com.carpediemsolution.dailynotes.app.App;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.Constants;
@@ -70,7 +70,7 @@ public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
     }
 
     private List<Task> getSharedPreferencesSettings(String s) {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(TaskApplication.getAppContext());
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(App.getAppContext());
         boolean pref = sharedPrefs.getBoolean(Constants.SORT, false);
 
         if (pref) {

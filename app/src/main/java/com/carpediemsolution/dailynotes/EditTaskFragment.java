@@ -1,6 +1,7 @@
 package com.carpediemsolution.dailynotes;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -71,7 +72,7 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
         }
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.new_task_fragment, container, false);
         ButterKnife.bind(this, view);

@@ -23,15 +23,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
 import com.squareup.picasso.Picasso;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,7 +45,7 @@ import butterknife.OnTextChanged;
  * Created by Юлия on 24.05.2017.
  */
 
-public class NewTaskFragment extends Fragment implements OnBackListener{
+public class NewTaskFragment extends Fragment implements OnBackListener {
 
     private Task task = new Task();
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -64,17 +67,17 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
     @OnClick(R.id.fab_write)
     public void onClick() {
         try {
-            if(task.getTask()!=null){
-            task.setTaskDate(new Date(System.currentTimeMillis()));
-            task.setDone(false);
-            HelperFactory.getHelper().getTaskDAO().create(task);
-            Log.d(LOG_TAG, "added " + task);
-            TasksListFragment tasksListFragment = new TasksListFragment();
-            fragmentManager = getFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
-            fragmentTransaction.commit();}
-            else {
+            if (task.getTask() != null) {
+                task.setTaskDate(new Date(System.currentTimeMillis()));
+                task.setDone(false);
+                HelperFactory.getHelper().getTaskDAO().create(task);
+                Log.d(LOG_TAG, "added " + task);
+                TasksListFragment tasksListFragment = new TasksListFragment();
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
+                fragmentTransaction.commit();
+            } else {
                 Toast toast = Toast.makeText(getActivity(), getString(R.string.insert_task), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
@@ -94,12 +97,12 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
     }
 
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.new_task_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",new Date(System.currentTimeMillis())));
+        dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", new Date(System.currentTimeMillis())));
 
         return view;
     }
@@ -127,7 +130,8 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
 
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG)
-                        .show();}
+                        .show();
+            }
         }
     }
 
@@ -142,14 +146,18 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
             for (String p : permissions) {
                 result = ContextCompat.checkSelfPermission(getActivity(), p);
                 if (result != PackageManager.PERMISSION_GRANTED) {
-                    listPermissionsNeeded.add(p);}
+                    listPermissionsNeeded.add(p);
+                }
             }
             if (!listPermissionsNeeded.isEmpty()) {
                 ActivityCompat.requestPermissions(getActivity(),
-                        listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), 100);
-                return false;}
+                        listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+                        100);
+                return false;
+            }
         }
-        return true;}
+        return true;
+    }
 
 
     @Override
@@ -158,7 +166,8 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             }
-            return;}
+            return;
+        }
     }
 
     @Override
@@ -170,7 +179,8 @@ public class NewTaskFragment extends Fragment implements OnBackListener{
         fragmentTransaction.commit();
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
     }
 }

@@ -9,7 +9,7 @@ import com.carpediemsolution.dailynotes.dao.HelperFactory;
  * Created by Юлия on 30.05.2017.
  */
 
-public class TaskApplication extends Application {
+public class App extends Application {
     private static Context appContext;
 
     public static Context getAppContext() {

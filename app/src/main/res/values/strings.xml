@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Daily Notes</string>
-
     <string name="sure_to_delete">Выберите действие</string>
     <string name="remove">УДАЛИТЬ</string>
     <string name="cancel">ОТМЕНА</string>

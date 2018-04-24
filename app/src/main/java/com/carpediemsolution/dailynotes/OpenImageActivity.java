@@ -19,7 +19,6 @@ public class OpenImageActivity extends Activity {
     @BindView(R.id.image_big_size)
     ImageView showImage;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

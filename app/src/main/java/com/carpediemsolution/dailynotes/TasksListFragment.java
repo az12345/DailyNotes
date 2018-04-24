@@ -3,6 +3,7 @@ package com.carpediemsolution.dailynotes;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -57,7 +58,7 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
 
    // private final String LOG_TAG = "TasksListFragment";
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tasks_list_fragment, container, false);
 
         unbinder = ButterKnife.bind(this, view);
@@ -65,19 +66,17 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         this.setHasOptionsMenu(true);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        FloatingActionButton fab =  view.findViewById(R.id.fab_add);
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TasksAdapter(getActivity());
 
-        searchEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
+        searchEditText.setOnFocusChangeListener((View v, boolean hasFocus)-> {
                 if (hasFocus)
                     searchEditText.setHint("");
                 else
                     searchEditText.setHint(getActivity().getResources().getString(R.string.app_name));
-            }
         });
         return view;
     }

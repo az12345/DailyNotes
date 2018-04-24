@@ -10,7 +10,6 @@ import java.util.Date;
  * Created by Юлия on 29.05.2017.
  */
 @DatabaseTable(tableName = "tasks")
-
 public class Task {
 
     private final static String TASK_NAME_FIELD_NAME = "task";

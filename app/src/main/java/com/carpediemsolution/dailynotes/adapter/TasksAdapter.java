@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 import com.carpediemsolution.dailynotes.EditTaskFragment;
 import com.carpediemsolution.dailynotes.OpenImageActivity;
 import com.carpediemsolution.dailynotes.R;
-import com.carpediemsolution.dailynotes.app.TaskApplication;
+import com.carpediemsolution.dailynotes.app.App;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.Constants;
@@ -67,13 +68,13 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TaskHolder(View itemView) {
             super(itemView);
 
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
-            dateTextView = (TextView) itemView.findViewById(R.id.date_item_text_view);
-            taskTextView = (TextView) itemView.findViewById(R.id.task_item_text_view);
-            doneCheckBox = (CheckBox) itemView.findViewById(R.id.task_checked);
-            imageView = (ImageView) itemView.findViewById(R.id.loaded_image);
-            editImageView = (ImageView) itemView.findViewById(R.id.edit_item);
-            deleteImageView = (ImageView) itemView.findViewById(R.id.delete_item);
+            cardView =  itemView.findViewById(R.id.card_view);
+            dateTextView = itemView.findViewById(R.id.date_item_text_view);
+            taskTextView =  itemView.findViewById(R.id.task_item_text_view);
+            doneCheckBox = itemView.findViewById(R.id.task_checked);
+            imageView =  itemView.findViewById(R.id.loaded_image);
+            editImageView =  itemView.findViewById(R.id.edit_item);
+            deleteImageView = itemView.findViewById(R.id.delete_item);
 
             doneCheckBox.setOnClickListener(v -> onClickCheckBox());
             imageView.setOnClickListener(v -> onClickImageView());
@@ -136,19 +137,16 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         e.printStackTrace();
                     }
                 }
-            }).setPositiveButton(mActivity.getString(R.string.cancel), new DialogInterface.OnClickListener() {  //not removing items if cancel is done
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            }).setPositiveButton(mActivity.getString(R.string.cancel), (DialogInterface dialog, int which)-> {
                     dialog.dismiss();
-                }
             });
 
             AlertDialog dialog = builder.create();
             dialog.show();
 
             //ссылка на контекст приложения
-            dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(TaskApplication.getAppContext().getResources().getColor(R.color.colorBlack));
-            dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(TaskApplication.getAppContext().getResources().getColor(R.color.colorBlack));
+            dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(App.getAppContext().getResources().getColor(R.color.colorBlack));
+            dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(App.getAppContext().getResources().getColor(R.color.colorBlack));
         }
     }
 
@@ -169,9 +167,9 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void setTasks(List<Task> taskList) {
         tasks = taskList;
     }
-
+ @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
 
         if (viewType == EMPTY_VIEW) {
@@ -184,7 +182,7 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder vho, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vho, int position) {
         if (vho instanceof TaskHolder) {
 
             TaskHolder vh = (TaskHolder) vho;
