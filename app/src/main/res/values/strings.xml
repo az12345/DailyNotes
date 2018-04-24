@@ -6,4 +6,5 @@
     <string name="note">Заметка...</string>
     <string name="insert_task">Заметка пустая</string>
     <string name="edit">РЕДАКТИРОВАТЬ</string>
+    <string name="progress_loading">Загрузка...</string>
 </resources>

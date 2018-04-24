@@ -54,15 +54,13 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
     @OnClick(R.id.fab_write)
     public void onClick() {
         try {
-            if(task.getTask()!=null){
-
+            if (task.getTask() != null) {
+                //todo wrapper
                 HelperFactory.getHelper().getTaskDAO().update(task);
-                TasksListFragment tasksListFragment = new TasksListFragment();
-                fragmentManager = getFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
-                fragmentTransaction.commit();}
-            else {
+
+                initTaskListFragment();
+
+            } else {
                 Toast toast = Toast.makeText(getActivity(), getString(R.string.insert_task), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
@@ -77,30 +75,43 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
         View view = inflater.inflate(R.layout.new_task_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        int id = getArguments().getInt(Constants.TASK_ID);
+
         try {
+            //todo
+            assert getArguments() != null;
+            int id = getArguments().getInt(Constants.TASK_ID);
+
             task = HelperFactory.getHelper().getTaskDAO().getTaskById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Log.d(LOG_TAG, "task id " + id);
+
         editTask.setText(task.getTask());
 
-        dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",new Date(System.currentTimeMillis())));
+        //todo Java 8
+        dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",
+                new Date(System.currentTimeMillis())));
 
         return view;
     }
 
     @Override
     public void onBackPressed() {
+        initTaskListFragment();
+    }
+
+    private void initTaskListFragment() {
         TasksListFragment tasksListFragment = new TasksListFragment();
         fragmentManager = getFragmentManager();
+        //todo
+        assert fragmentManager != null;
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
         fragmentTransaction.commit();
     }
 
-    @Override public void onDestroy() {
+    @Override
+    public void onDestroy() {
         super.onDestroy();
     }
 }

@@ -68,12 +68,12 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TaskHolder(View itemView) {
             super(itemView);
 
-            cardView =  itemView.findViewById(R.id.card_view);
+            cardView = itemView.findViewById(R.id.card_view);
             dateTextView = itemView.findViewById(R.id.date_item_text_view);
-            taskTextView =  itemView.findViewById(R.id.task_item_text_view);
+            taskTextView = itemView.findViewById(R.id.task_item_text_view);
             doneCheckBox = itemView.findViewById(R.id.task_checked);
-            imageView =  itemView.findViewById(R.id.loaded_image);
-            editImageView =  itemView.findViewById(R.id.edit_item);
+            imageView = itemView.findViewById(R.id.loaded_image);
+            editImageView = itemView.findViewById(R.id.edit_item);
             deleteImageView = itemView.findViewById(R.id.delete_item);
 
             doneCheckBox.setOnClickListener(v -> onClickCheckBox());
@@ -137,8 +137,8 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         e.printStackTrace();
                     }
                 }
-            }).setPositiveButton(mActivity.getString(R.string.cancel), (DialogInterface dialog, int which)-> {
-                    dialog.dismiss();
+            }).setPositiveButton(mActivity.getString(R.string.cancel), (DialogInterface dialog, int which) -> {
+                dialog.dismiss();
             });
 
             AlertDialog dialog = builder.create();
@@ -167,7 +167,8 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void setTasks(List<Task> taskList) {
         tasks = taskList;
     }
- @NonNull
+
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
@@ -188,7 +189,7 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             TaskHolder vh = (TaskHolder) vho;
             task = tasks.get(position);
 
-            vh.cardView.setCardBackgroundColor(Color.parseColor(getCardViewColor()));
+            vh.cardView.setCardBackgroundColor(Color.parseColor(generateItemColor()));
             vh.dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", task.getTaskDate()));
             vh.taskTextView.setText(task.getTask());
             vh.doneCheckBox.setChecked(task.isDone());
@@ -205,7 +206,7 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
-    private String getCardViewColor() {
+    private String generateItemColor() {
         List<String> colors = new ArrayList<>();
         colors.add(Constants.colorOne);
         colors.add(Constants.colorTwo);

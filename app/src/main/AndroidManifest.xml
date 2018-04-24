@@ -27,10 +27,10 @@
         <activity
             android:name="com.carpediemsolution.dailynotes.OpenImageActivity"
             android:label=" "
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.carpediemsolution.dailynotes.UserSettingActivity"
-            android:parentActivityName="com.carpediemsolution.dailynotes.MainActivity"/>
-</application>
+            android:parentActivityName="com.carpediemsolution.dailynotes.MainActivity" />
+    </application>
 </manifest>

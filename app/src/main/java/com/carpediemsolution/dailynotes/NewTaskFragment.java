@@ -66,26 +66,22 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
 
     @OnClick(R.id.fab_write)
     public void onClick() {
-        try {
-            if (task.getTask() != null) {
-                task.setTaskDate(new Date(System.currentTimeMillis()));
-                task.setDone(false);
-                HelperFactory.getHelper().getTaskDAO().create(task);
-                Log.d(LOG_TAG, "added " + task);
-                TasksListFragment tasksListFragment = new TasksListFragment();
-                fragmentManager = getFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
-                fragmentTransaction.commit();
-            } else {
-                Toast toast = Toast.makeText(getActivity(), getString(R.string.insert_task), Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        if (task.getTask() != null) {
+            //todo
+            //in presenter
+            saveTask();
+            //interface
+            initTaskListFragment();
+
+        } else {
+            //todo  in error
+            Toast toast = Toast.makeText(getActivity(), getString(R.string.insert_task), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
+
 
     @OnClick(R.id.add_photo)
     public void addImage() {
@@ -112,6 +108,7 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
 
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == getActivity().RESULT_OK && null != data) {
             try {
+               //todo wtf?
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage,
@@ -172,11 +169,28 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
 
     @Override
     public void onBackPressed() {
+        initTaskListFragment();
+    }
+
+    private void initTaskListFragment() {
         TasksListFragment tasksListFragment = new TasksListFragment();
         fragmentManager = getFragmentManager();
+        assert fragmentManager != null;
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
         fragmentTransaction.commit();
+    }
+
+    private void saveTask() {
+        task.setTaskDate(new Date(System.currentTimeMillis()));
+        task.setDone(false);
+        try {
+            HelperFactory.getHelper().getTaskDAO().create(task);
+        } catch (SQLException e) {
+            //todo toast
+
+        }
+        Log.d(LOG_TAG, "added " + task);
     }
 
     @Override

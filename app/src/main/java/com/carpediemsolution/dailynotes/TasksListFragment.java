@@ -29,6 +29,7 @@ import com.carpediemsolution.dailynotes.utils.OnBackListener;
 import com.carpediemsolution.dailynotes.views.TaskSearchView;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,27 +57,27 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
     private Unbinder unbinder;
     private TasksAdapter adapter;
 
-   // private final String LOG_TAG = "TasksListFragment";
+    // private final String LOG_TAG = "TasksListFragment";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tasks_list_fragment, container, false);
 
         unbinder = ButterKnife.bind(this, view);
-
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        //todo
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(mToolbar);
         this.setHasOptionsMenu(true);
 
-        FloatingActionButton fab =  view.findViewById(R.id.fab_add);
+        FloatingActionButton fab = view.findViewById(R.id.fab_add);
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TasksAdapter(getActivity());
 
-        searchEditText.setOnFocusChangeListener((View v, boolean hasFocus)-> {
-                if (hasFocus)
-                    searchEditText.setHint("");
-                else
-                    searchEditText.setHint(getActivity().getResources().getString(R.string.app_name));
+        searchEditText.setOnFocusChangeListener((View v, boolean hasFocus) -> {
+            if (hasFocus)
+                searchEditText.setHint("");
+            else
+                searchEditText.setHint(getActivity().getResources().getString(R.string.app_name));
         });
         return view;
     }
@@ -90,8 +91,13 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
 
     @OnClick(R.id.fab_add)
     public void onNewTaskClick() {
+        addNewTask();
+    }
+
+    private void addNewTask() {
         NewTaskFragment addTask = new NewTaskFragment();
         FragmentManager fragmentManager = getFragmentManager();
+        assert fragmentManager != null;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fromCont, addTask);
         fragmentTransaction.commit();
@@ -128,6 +134,7 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
         return super.onOptionsItemSelected(item);
     }
 
+    //todo
     @Override
     public void onBackPressed() {
         getActivity().finishAffinity();
