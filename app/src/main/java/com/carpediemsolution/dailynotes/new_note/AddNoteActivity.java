@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes;
+package com.carpediemsolution.dailynotes.new_note;
 
 import android.Manifest;
 import android.content.Intent;
@@ -10,23 +10,21 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carpediemsolution.dailynotes.R;
+import com.carpediemsolution.dailynotes.base.base_view.BaseActivity;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.utils.OnBackListener;
+import com.carpediemsolution.dailynotes.new_task.AddTaskActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -40,18 +38,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-
-/**
- * Created by Юлия on 24.05.2017.
- */
-
-public class NewTaskFragment extends Fragment implements OnBackListener {
+public class AddNoteActivity extends BaseActivity {
 
     private Task task = new Task();
+
     private static final int REQUEST_TAKE_PHOTO = 1;
-    private final String LOG_TAG = "NewTaskFragment";
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+    private final String LOG_TAG = AddTaskActivity.class.getSimpleName();
+
 
     @BindView(R.id.image)
     ImageView imageView;
@@ -72,11 +65,10 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
             //in presenter
             saveTask();
             //interface
-            initTaskListFragment();
 
         } else {
             //todo  in error
-            Toast toast = Toast.makeText(getActivity(), getString(R.string.insert_task), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, getString(R.string.insert_task), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
@@ -93,25 +85,24 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
     }
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.new_task_fragment, container, false);
-        ButterKnife.bind(this, view);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.new_task_fragment);
+        ButterKnife.bind(this);
 
         dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", new Date(System.currentTimeMillis())));
-
-        return view;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == getActivity().RESULT_OK && null != data) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK && null != data) {
             try {
-               //todo wtf?
+                //todo wtf?
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 //
                 cursor.moveToFirst();
@@ -121,12 +112,12 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
                 cursor.close();
                 task.setImageUri(imgDecodableString);
 
-                Picasso.with(getActivity())
+                Picasso.with(this)
                         .load(new File(imgDecodableString))
                         .into(imageView);
 
             } catch (Exception e) {
-                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
                         .show();
             }
         }
@@ -141,13 +132,13 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
             int result;
             List<String> listPermissionsNeeded = new ArrayList<>();
             for (String p : permissions) {
-                result = ContextCompat.checkSelfPermission(getActivity(), p);
+                result = ContextCompat.checkSelfPermission(this, p);
                 if (result != PackageManager.PERMISSION_GRANTED) {
                     listPermissionsNeeded.add(p);
                 }
             }
             if (!listPermissionsNeeded.isEmpty()) {
-                ActivityCompat.requestPermissions(getActivity(),
+                ActivityCompat.requestPermissions(this,
                         listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
                         100);
                 return false;
@@ -167,19 +158,6 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        initTaskListFragment();
-    }
-
-    private void initTaskListFragment() {
-        TasksListFragment tasksListFragment = new TasksListFragment();
-        fragmentManager = getFragmentManager();
-        assert fragmentManager != null;
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fromCont, tasksListFragment);
-        fragmentTransaction.commit();
-    }
 
     private void saveTask() {
         task.setTaskDate(new Date(System.currentTimeMillis()));
@@ -192,11 +170,4 @@ public class NewTaskFragment extends Fragment implements OnBackListener {
         }
         Log.d(LOG_TAG, "added " + task);
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
 }
-
-

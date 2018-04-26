@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes;
+package com.carpediemsolution.dailynotes.tasks_list;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -22,7 +22,10 @@ import android.widget.EditText;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.carpediemsolution.dailynotes.adapter.TasksAdapter;
+import com.carpediemsolution.dailynotes.new_task.AddTaskActivity;
+import com.carpediemsolution.dailynotes.R;
+import com.carpediemsolution.dailynotes.UserSettingActivity;
+import com.carpediemsolution.dailynotes.adapter.ItemsAdapter;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.presenters.TaskSearchPresenter;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
@@ -41,7 +44,8 @@ import butterknife.Unbinder;
  * Created by Юлия on 24.05.2017.
  */
 
-public class TasksListFragment extends MvpAppCompatFragment implements OnBackListener, TaskSearchView {
+public class ItemsListFragment extends MvpAppCompatFragment implements
+        OnBackListener, TaskSearchView {
 
     @InjectPresenter
     TaskSearchPresenter presenter;
@@ -55,7 +59,7 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
     EditText searchEditText;
 
     private Unbinder unbinder;
-    private TasksAdapter adapter;
+    private ItemsAdapter adapter;
 
     // private final String LOG_TAG = "TasksListFragment";
 
@@ -71,7 +75,7 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new TasksAdapter(getActivity());
+        adapter = new ItemsAdapter(getActivity());
 
         searchEditText.setOnFocusChangeListener((View v, boolean hasFocus) -> {
             if (hasFocus)
@@ -95,12 +99,8 @@ public class TasksListFragment extends MvpAppCompatFragment implements OnBackLis
     }
 
     private void addNewTask() {
-        NewTaskFragment addTask = new NewTaskFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        assert fragmentManager != null;
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fromCont, addTask);
-        fragmentTransaction.commit();
+        Intent intent = new Intent(getActivity(), AddTaskActivity.class);
+        startActivity(intent);
     }
 
     @Override

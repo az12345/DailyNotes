@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.carpediemsolution.dailynotes.MainActivity"
+            android:name="com.carpediemsolution.dailynotes.tasks_list.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
@@ -25,12 +25,22 @@
         </activity>
 
         <activity
+            android:name=".new_note.AddNoteActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".new_task.AddTaskActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name="com.carpediemsolution.dailynotes.OpenImageActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.carpediemsolution.dailynotes.UserSettingActivity"
-            android:parentActivityName="com.carpediemsolution.dailynotes.MainActivity" />
+            android:parentActivityName="com.carpediemsolution.dailynotes.tasks_list.MainActivity" />
     </application>
 </manifest>

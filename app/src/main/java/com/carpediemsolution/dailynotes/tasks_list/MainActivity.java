@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes;
+package com.carpediemsolution.dailynotes.tasks_list;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -11,20 +11,17 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
-
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TasksListFragment taskList;
+    private ItemsListFragment taskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ButterKnife.bind(this);
 
         initTaskListFragment();
     }
@@ -32,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private void initTaskListFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (taskList == null) {
-            taskList = new TasksListFragment();
+            taskList = new ItemsListFragment();
             fragmentManager.beginTransaction()
                     .add(R.id.fromCont, taskList)
                     .commit();

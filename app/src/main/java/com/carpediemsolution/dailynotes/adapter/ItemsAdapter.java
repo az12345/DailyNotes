@@ -39,14 +39,14 @@ import java.util.List;
  * Created by Юлия on 30.05.2017.
  */
 
-public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int EMPTY_VIEW = 1;
     private Task task;
     private FragmentActivity mActivity;
     private List<Task> tasks;
 
-    public TasksAdapter(FragmentActivity activity) {
+    public ItemsAdapter(FragmentActivity activity) {
         this.mActivity = activity;
     }
 
@@ -126,9 +126,7 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, R.style.MyTheme_Dark_Dialog); //alert for confirm to delete
 
             builder.setMessage(mActivity.getString(R.string.sure_to_delete));    //set message
-            builder.setNegativeButton(mActivity.getString(R.string.remove), new DialogInterface.OnClickListener() { //when click on DELETE
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            builder.setNegativeButton(mActivity.getString(R.string.remove), (DialogInterface dialog, int which)-> {
                     try {
                         HelperFactory.getHelper().getTaskDAO().delete(task);
                         tasks.remove(position);
@@ -136,7 +134,6 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                }
             }).setPositiveButton(mActivity.getString(R.string.cancel), (DialogInterface dialog, int which) -> {
                 dialog.dismiss();
             });
@@ -152,11 +149,7 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (tasks.size() == 0) {
-            return EMPTY_VIEW;
-        } else {
-            return super.getItemViewType(position);
-        }
+        return  tasks.size() == 0 ? EMPTY_VIEW : super.getItemViewType(position);
     }
 
     @Override
@@ -190,6 +183,7 @@ public class TasksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             task = tasks.get(position);
 
             vh.cardView.setCardBackgroundColor(Color.parseColor(generateItemColor()));
+
             vh.dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", task.getTaskDate()));
             vh.taskTextView.setText(task.getTask());
             vh.doneCheckBox.setChecked(task.isDone());

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
+import com.carpediemsolution.dailynotes.tasks_list.ItemsListFragment;
 import com.carpediemsolution.dailynotes.utils.Constants;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
 
@@ -81,7 +82,7 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
             assert getArguments() != null;
             int id = getArguments().getInt(Constants.TASK_ID);
 
-            task = HelperFactory.getHelper().getTaskDAO().getTaskById(id);
+            task = (Task)HelperFactory.getHelper().getTaskDAO().getTaskById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,7 +102,7 @@ public class EditTaskFragment extends Fragment implements OnBackListener {
     }
 
     private void initTaskListFragment() {
-        TasksListFragment tasksListFragment = new TasksListFragment();
+        ItemsListFragment tasksListFragment = new ItemsListFragment();
         fragmentManager = getFragmentManager();
         //todo
         assert fragmentManager != null;

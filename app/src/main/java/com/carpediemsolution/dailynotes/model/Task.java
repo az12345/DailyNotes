@@ -9,60 +9,34 @@ import java.util.Date;
 /**
  * Created by Юлия on 29.05.2017.
  */
-@DatabaseTable(tableName = "tasks")
-public class Task {
+@DatabaseTable(tableName="tasks")
+public class Task extends AbstractItem{
 
-    private final static String TASK_NAME_FIELD_NAME = "task";
+    private final static String ID_PARENT = "id_parent";
+    private final static String LEVEL = "level";
 
-    @DatabaseField(generatedId = true)
-    private int Id;
+    @DatabaseField(canBeNull = true, dataType = DataType.INTEGER, columnName = ID_PARENT)
+    private int idParent;
 
-    @DatabaseField(canBeNull = false, dataType = DataType.STRING, columnName = TASK_NAME_FIELD_NAME)
-    private String task;
+    @DatabaseField(canBeNull = true, dataType = DataType.INTEGER, columnName = LEVEL)
+    private int level;
 
-    @DatabaseField(canBeNull = false,dataType = DataType.DATE)
-    private Date taskDate;
 
-    @DatabaseField(dataType = DataType.BOOLEAN)
-    private boolean done;
-
-    @DatabaseField(canBeNull = true, dataType = DataType.STRING)
-    private String imageUri;
-
-    public int getId() {
-        return Id;
+    public int getIdParent() {
+        return idParent;
     }
 
-    public String getTask() {
-        return task;
+    public int getLevel() {
+        return level;
     }
 
-    public Date getTaskDate() {
-        return taskDate;
+
+    public void setIdParent(int idParent) {
+        this.idParent = idParent;
     }
 
-    public boolean isDone() {
-        return done;
+    public void setLevel(int level) {
+        this.level = level;
     }
-
-    public String getImageUri() {return imageUri;}
-
-    public void setId(int id) {
-        Id = id;
-    }
-
-    public void setTask(String task) {
-        this.task = task;
-    }
-
-    public void setTaskDate(Date taskDate) {
-        this.taskDate = taskDate;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
-    public void setImageUri(String imageUri) {this.imageUri = imageUri;}
 }
 

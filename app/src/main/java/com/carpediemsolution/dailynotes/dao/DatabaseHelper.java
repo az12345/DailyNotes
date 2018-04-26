@@ -3,6 +3,9 @@ package com.carpediemsolution.dailynotes.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.carpediemsolution.dailynotes.model.AbstractItem;
+import com.carpediemsolution.dailynotes.model.Note;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -25,10 +28,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private TaskDAO taskDao = null;
+    private ItemDAO taskDao = null;
 
     public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME, null, DATABASE_VERSION);
+        super(context,DATABASE_NAME,
+                null, DATABASE_VERSION);
     }
 
     //Выполняется, когда файл с БД не найден на устройстве
@@ -36,6 +40,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource){
         try
         {
+            TableUtils.createTable(connectionSource, Note.class);
             TableUtils.createTable(connectionSource, Task.class);
         }
         catch (SQLException e){
@@ -49,6 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVer,
                           int newVer){
         try{
+            TableUtils.dropTable(connectionSource, Note.class, true);
             TableUtils.dropTable(connectionSource, Task.class, true);
             onCreate(db, connectionSource);
         }
@@ -59,9 +65,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     //синглтон для TaskDAO
-    public TaskDAO getTaskDAO() throws SQLException {
+    public ItemDAO getTaskDAO() throws SQLException {
         if(taskDao == null){
-            taskDao = new TaskDAO(getConnectionSource(), Task.class);
+            taskDao = new ItemDAO(getConnectionSource(), AbstractItem.class);
         }
         return taskDao;
     }
