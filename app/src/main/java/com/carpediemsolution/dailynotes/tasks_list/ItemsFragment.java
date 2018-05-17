@@ -1,13 +1,12 @@
 package com.carpediemsolution.dailynotes.tasks_list;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,16 +19,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.carpediemsolution.dailynotes.base.base_view.BaseFragment;
 import com.carpediemsolution.dailynotes.new_task.AddTaskActivity;
 import com.carpediemsolution.dailynotes.R;
-import com.carpediemsolution.dailynotes.UserSettingActivity;
+import com.carpediemsolution.dailynotes.utils.view.UserSettingActivity;
 import com.carpediemsolution.dailynotes.adapter.ItemsAdapter;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.presenters.TaskSearchPresenter;
+import com.carpediemsolution.dailynotes.tasks_list.presenter.ItemsPresenter;
+import com.carpediemsolution.dailynotes.tasks_list.presenter.TaskSearchPresenter;
+import com.carpediemsolution.dailynotes.tasks_list.view.ItemsView;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
-import com.carpediemsolution.dailynotes.views.TaskSearchView;
+import com.carpediemsolution.dailynotes.tasks_list.view.TaskSearchView;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,11 +45,10 @@ import butterknife.Unbinder;
  * Created by Юлия on 24.05.2017.
  */
 
-public class ItemsListFragment extends MvpAppCompatFragment implements
-        OnBackListener, TaskSearchView {
+public class ItemsFragment extends BaseFragment implements
+        OnBackListener, TaskSearchView, ItemsView {
 
-    @InjectPresenter
-    TaskSearchPresenter presenter;
+    private final String TAG = ItemsFragment.class.getSimpleName();
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -57,32 +57,36 @@ public class ItemsListFragment extends MvpAppCompatFragment implements
     Toolbar mToolbar;
     @BindView(R.id.search)
     EditText searchEditText;
+    @BindView(R.id.fab_add)
+    FloatingActionButton fab;
+
+    @InjectPresenter
+    TaskSearchPresenter presenter;
+    @InjectPresenter
+    ItemsPresenter itemsPresenter;
 
     private Unbinder unbinder;
     private ItemsAdapter adapter;
 
-    // private final String LOG_TAG = "TasksListFragment";
+    @OnClick(R.id.fab_add)
+    public void onNewTaskClick() {
+        addNewTask();
+    }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tasks_list_fragment, container, false);
 
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         unbinder = ButterKnife.bind(this, view);
-        //todo
+
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(mToolbar);
         this.setHasOptionsMenu(true);
 
-        FloatingActionButton fab = view.findViewById(R.id.fab_add);
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
+        setSearchEditTextListener();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ItemsAdapter(getActivity());
+        itemsPresenter.getItems();
 
-        searchEditText.setOnFocusChangeListener((View v, boolean hasFocus) -> {
-            if (hasFocus)
-                searchEditText.setHint("");
-            else
-                searchEditText.setHint(getActivity().getResources().getString(R.string.app_name));
-        });
         return view;
     }
 
@@ -92,31 +96,35 @@ public class ItemsListFragment extends MvpAppCompatFragment implements
         presenter.init(searchEditText);
     }
 
-
-    @OnClick(R.id.fab_add)
-    public void onNewTaskClick() {
-        addNewTask();
-    }
-
     private void addNewTask() {
         Intent intent = new Intent(getActivity(), AddTaskActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.disposeObservable();
-        unbinder.unbind();
+    public void showItems(List<Task> tasks) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new ItemsAdapter(tasks);
     }
 
+
     @Override
-    public void changeDataInRecyclerView(List<Task> taskList) {
+    public void updateItems(List<Task> taskList) {
         recyclerView.setAdapter(adapter);
         adapter.setTasks(taskList);
         adapter.notifyDataSetChanged();
     }
 
+    private void setSearchEditTextListener() {
+        searchEditText.setOnFocusChangeListener((View v, boolean hasFocus) -> {
+            if (hasFocus)
+                searchEditText.setHint("");
+            else
+                searchEditText.setHint(getActivity().getResources().getString(R.string.app_name));
+        });
+    }
+
+    /* base */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
@@ -134,9 +142,19 @@ public class ItemsListFragment extends MvpAppCompatFragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    //todo
+    private Activity activity = getActivity();
+
     @Override
     public void onBackPressed() {
-        getActivity().finishAffinity();
+        if (activity != null)
+            activity.finish();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.disposeObservable();
+        unbinder.unbind();
+    }
+
 }

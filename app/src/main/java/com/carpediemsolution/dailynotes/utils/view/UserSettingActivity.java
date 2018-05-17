@@ -1,9 +1,10 @@
-package com.carpediemsolution.dailynotes;
+package com.carpediemsolution.dailynotes.utils.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
+import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.tasks_list.MainActivity;
 
 /**

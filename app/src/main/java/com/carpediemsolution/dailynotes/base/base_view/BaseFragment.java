@@ -11,9 +11,9 @@ import com.carpediemsolution.dailynotes.R;
 
 public abstract class BaseFragment extends MvpAppCompatFragment implements BaseView {
 
+    private Activity activity;
     public ProgressDialog progressDialog;
 
-    private Activity activity;
 
     @Override
     public void showLoading() {
@@ -37,9 +37,6 @@ public abstract class BaseFragment extends MvpAppCompatFragment implements BaseV
         if (progressDialog.isShowing()) progressDialog.dismiss();
     }
 
-
-
-
     @Override
     public void showError(@NonNull String errorDescription) {
         activity = getActivity();
@@ -50,7 +47,7 @@ public abstract class BaseFragment extends MvpAppCompatFragment implements BaseV
     @Override
     public void showUnknownError() {
         activity = getActivity();
-        Toast.makeText(activity, "Что-то пошло не так!",
+        Toast.makeText(activity, R.string.smth_went_wrong,
                 Toast.LENGTH_SHORT).show();
     }
 

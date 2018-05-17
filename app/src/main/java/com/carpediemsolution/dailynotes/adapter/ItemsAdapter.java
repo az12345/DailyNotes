@@ -1,14 +1,9 @@
 package com.carpediemsolution.dailynotes.adapter;
 
-import android.content.DialogInterface;
-import android.content.Intent;
+
+import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -20,20 +15,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.carpediemsolution.dailynotes.EditTaskFragment;
-import com.carpediemsolution.dailynotes.OpenImageActivity;
 import com.carpediemsolution.dailynotes.R;
-import com.carpediemsolution.dailynotes.app.App;
-import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.carpediemsolution.dailynotes.utils.Constants.EMPTY_VIEW;
 
 /**
  * Created by Юлия on 30.05.2017.
@@ -41,13 +33,11 @@ import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int EMPTY_VIEW = 1;
-    private Task task;
-    private FragmentActivity mActivity;
+    private Context context;
     private List<Task> tasks;
 
-    public ItemsAdapter(FragmentActivity activity) {
-        this.mActivity = activity;
+    public ItemsAdapter(List<Task> tasks){
+        this.tasks = tasks;
     }
 
     private class EmptyViewHolder extends RecyclerView.ViewHolder {
@@ -67,6 +57,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         private TaskHolder(View itemView) {
             super(itemView);
+            context = itemView.getContext();
 
             cardView = itemView.findViewById(R.id.card_view);
             dateTextView = itemView.findViewById(R.id.date_item_text_view);
@@ -76,80 +67,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             editImageView = itemView.findViewById(R.id.edit_item);
             deleteImageView = itemView.findViewById(R.id.delete_item);
 
-            doneCheckBox.setOnClickListener(v -> onClickCheckBox());
-            imageView.setOnClickListener(v -> onClickImageView());
-            editImageView.setOnClickListener(v -> onClickEditView());
-            deleteImageView.setOnClickListener(v -> onClickDeleteView());
+            doneCheckBox.setOnClickListener(v -> todo());
+            imageView.setOnClickListener(v -> todo());
+            editImageView.setOnClickListener(v -> todo());
+            deleteImageView.setOnClickListener(v -> todo());
         }
+    }
 
-        private void onClickCheckBox() {
-            int position = getLayoutPosition();
-            task = tasks.get(position);
+    private void todo() {
 
-            if (task.isDone())
-                task.setDone(false);
-            else task.setDone(true);
-
-            try {
-                HelperFactory.getHelper().getTaskDAO().update(task);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void onClickImageView() {
-            int position = getLayoutPosition();
-            task = tasks.get(position);
-            Intent intent = new Intent(mActivity, OpenImageActivity.class);
-            intent.putExtra("uri", task.getImageUri());
-            mActivity.startActivity(intent);
-        }
-
-        private void onClickEditView() {
-            int position = getLayoutPosition();
-            Task task = tasks.get(position);
-            Bundle b = new Bundle();
-            b.putInt(Constants.TASK_ID, task.getId());
-            EditTaskFragment editTaskFragment = new EditTaskFragment();
-            FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction;
-            editTaskFragment.setArguments(b);
-
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fromCont, editTaskFragment);
-            fragmentTransaction.commit();
-        }
-
-        private void onClickDeleteView() {
-            int position = getLayoutPosition();
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, R.style.MyTheme_Dark_Dialog); //alert for confirm to delete
-
-            builder.setMessage(mActivity.getString(R.string.sure_to_delete));    //set message
-            builder.setNegativeButton(mActivity.getString(R.string.remove), (DialogInterface dialog, int which)-> {
-                    try {
-                        HelperFactory.getHelper().getTaskDAO().delete(task);
-                        tasks.remove(position);
-                        notifyItemRemoved(position);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-            }).setPositiveButton(mActivity.getString(R.string.cancel), (DialogInterface dialog, int which) -> {
-                dialog.dismiss();
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-            //ссылка на контекст приложения
-            dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(App.getAppContext().getResources().getColor(R.color.colorBlack));
-            dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(App.getAppContext().getResources().getColor(R.color.colorBlack));
-        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return  tasks.size() == 0 ? EMPTY_VIEW : super.getItemViewType(position);
+        return tasks.size() == 0 ? EMPTY_VIEW : super.getItemViewType(position);
     }
 
     @Override
@@ -170,7 +101,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.empty_view, parent, false);
             return new EmptyViewHolder(v);
         } else {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_view, parent, false);
             return new TaskHolder(v);
         }
     }
@@ -180,10 +111,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (vho instanceof TaskHolder) {
 
             TaskHolder vh = (TaskHolder) vho;
-            task = tasks.get(position);
+            Task task = tasks.get(position);
 
             vh.cardView.setCardBackgroundColor(Color.parseColor(generateItemColor()));
 
+            //todo
             vh.dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", task.getTaskDate()));
             vh.taskTextView.setText(task.getTask());
             vh.doneCheckBox.setChecked(task.isDone());
@@ -192,7 +124,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
                 params.addRule(RelativeLayout.BELOW, R.id.task_item_text_view);
                 vh.imageView.setLayoutParams(params);
-                Picasso.with(mActivity)
+                Picasso.with(context)
                         .load(new File(task.getImageUri()))
                         .into(vh.imageView);
             }
@@ -214,4 +146,62 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Collections.shuffle(colors);
         return colors.get(0);
     }
+
+   /* private void onClickCheckBox() {
+        int position = getLayoutPosition();
+        task = tasks.get(position);
+
+        if (task.isDone())
+            task.setDone(false);
+        else task.setDone(true);
+
+        try {
+            HelperFactory.getHelper().getTaskDAO().update(task);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void onClickImageView() {
+        int position = getLayoutPosition();
+        task = tasks.get(position);
+        Intent intent = new Intent(context, OpenImageActivity.class);
+        intent.putExtra("uri", task.getImageUri());
+        context.startActivity(intent);
+    }*/
+
+ /*   private void onClickEditView() {
+        int position = getLayoutPosition();
+        Task task = tasks.get(position);
+        Bundle b = new Bundle();
+        b.putInt(Constants.TASK_ID, task.getId());
+        //todo
+    }
+
+    private void onClickDeleteView() {
+        int position = getLayoutPosition();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyTheme_Dark_Dialog); //alert for confirm to delete
+
+        builder.setMessage(mActivity.getString(R.string.sure_to_delete));    //set message
+        builder.setNegativeButton(context.getString(R.string.remove), (DialogInterface dialog, int which) -> {
+            try {
+                HelperFactory.getHelper().getTaskDAO().delete(task);
+                tasks.remove(position);
+                notifyItemRemoved(position);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }).setPositiveButton(context.getString(R.string.cancel), (DialogInterface dialog, int which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        //ссылка на контекст приложения
+        dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(App.getAppContext().getResources().getColor(R.color.colorBlack));
+        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(App.getAppContext().getResources().getColor(R.color.colorBlack));
+    }*/
 }
+

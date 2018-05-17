@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.carpediemsolution.dailynotes.model.AbstractItem;
 import com.carpediemsolution.dailynotes.model.Note;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -28,7 +27,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private ItemDAO taskDao = null;
+    private TaskDao taskDao = null;
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,
@@ -65,12 +64,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
     //синглтон для TaskDAO
-    public ItemDAO getTaskDAO() throws SQLException {
+    public TaskDao getTaskDAO() throws SQLException {
         if(taskDao == null){
-            taskDao = new ItemDAO(getConnectionSource(), AbstractItem.class);
+            taskDao = new TaskDao(getConnectionSource(), Task.class);
         }
         return taskDao;
     }
+
+
 
     //выполняется при закрытии приложения
     @Override

@@ -16,7 +16,7 @@ import com.carpediemsolution.dailynotes.utils.OnBackListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ItemsListFragment taskList;
+    private ItemsFragment taskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +24,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initTaskListFragment();
+
     }
 
     private void initTaskListFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (taskList == null) {
-            taskList = new ItemsListFragment();
+            taskList = new ItemsFragment();
             fragmentManager.beginTransaction()
                     .add(R.id.fromCont, taskList)
                     .commit();

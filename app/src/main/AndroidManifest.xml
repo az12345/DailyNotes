@@ -35,12 +35,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.carpediemsolution.dailynotes.OpenImageActivity"
+            android:name="com.carpediemsolution.dailynotes.utils.view.OpenImageActivity"
             android:label=" "
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.carpediemsolution.dailynotes.UserSettingActivity"
+            android:name="com.carpediemsolution.dailynotes.utils.view.UserSettingActivity"
             android:parentActivityName="com.carpediemsolution.dailynotes.tasks_list.MainActivity" />
     </application>
 </manifest>

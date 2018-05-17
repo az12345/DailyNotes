@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.presenters;
+package com.carpediemsolution.dailynotes.tasks_list.presenter;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,7 +11,7 @@ import com.carpediemsolution.dailynotes.app.App;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.Constants;
-import com.carpediemsolution.dailynotes.views.TaskSearchView;
+import com.carpediemsolution.dailynotes.tasks_list.view.TaskSearchView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 
@@ -39,18 +39,18 @@ public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
         DisposableObserver observer = new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onComplete() {
-                Log.e(LOG_TAG, "--------- onComplete");
+                Log.e(LOG_TAG, "---onComplete");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e(LOG_TAG, "--------- on error!");
+                Log.e(LOG_TAG, "--- on error!");
             }
 
             @Override
             public void onNext(TextViewTextChangeEvent onTextChangeEvent) {
-                taskList = getSearchedTask(onTextChangeEvent.text().toString());
-                 getViewState().changeDataInRecyclerView(taskList);
+                 taskList = getSearchedTask(onTextChangeEvent.text().toString());
+                 getViewState().updateItems(taskList);
             }
         };
        //

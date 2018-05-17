@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.views;
+package com.carpediemsolution.dailynotes.tasks_list.view;
 
 
 import com.arellomobile.mvp.MvpView;
@@ -12,5 +12,5 @@ import java.util.List;
 
 public interface TaskSearchView extends MvpView{
 
-    void changeDataInRecyclerView(List<Task> taskList);
+    void updateItems(List<Task> taskList);
 }

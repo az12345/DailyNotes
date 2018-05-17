@@ -12,10 +12,10 @@ import java.util.List;
  * Created by Юлия on 30.05.2017.
  */
 
-public class ItemDAO extends BaseDaoImpl<AbstractItem, Integer> {
+public class TaskDao extends BaseDaoImpl<Task, Integer> {
 
-    public ItemDAO(ConnectionSource connectionSource,
-                   Class<AbstractItem> dataClass) throws SQLException {
+    public TaskDao(ConnectionSource connectionSource,
+                   Class<Task> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
@@ -23,34 +23,35 @@ public class ItemDAO extends BaseDaoImpl<AbstractItem, Integer> {
         return this.queryForId(id);
     }
 
-    public List<AbstractItem>getAllTasks()throws SQLException{
+    public List<Task>getAllTasks()throws SQLException{
        return this.queryForAll();
     }
 
-    public List<AbstractItem> getAllTasksByDate() throws SQLException{
+    public List<Task> getAllTasksByDate() throws SQLException{
         //метод без сортировки по дате
         return this.queryBuilder().orderBy("taskDate", false).query();
     }
 
-    public List<AbstractItem> getAllTasksByChecked() throws SQLException{
+    public List<Task> getAllTasksByChecked() throws SQLException{
         //метод без сортировки по отмеченной заметке
         return this.queryBuilder().orderBy("done", true).query();
     }
 
-    public List<AbstractItem> getAllTasksBySearchString(String string)throws SQLException{
+    public List<Task> getAllTasksBySearchString(String string)throws SQLException{
         PreparedQuery preparedQuery = this.queryBuilder().where().like("task", "%" +  string +  "%").prepare();
 
         return this.query(preparedQuery);
     }
 
-    public List<AbstractItem> getAllTasksBySearchStringOrderedByDate(String string)
+    public List<Task> getAllTasksBySearchStringOrderedByDate(String string)
             throws SQLException{
-        PreparedQuery preparedQuery = this.queryBuilder().orderBy("taskDate", false).where().like("task", "%" +  string +  "%").prepare();
+        PreparedQuery preparedQuery = this.queryBuilder().orderBy("taskDate", false)
+                .where().like("task", "%" +  string +  "%").prepare();
 
         return this.query(preparedQuery);
     }
 
-    public List<AbstractItem> getAllTasksBySearchStringOrderedByChecked(String string)throws SQLException{
+    public List<Task> getAllTasksBySearchStringOrderedByChecked(String string)throws SQLException{
         PreparedQuery preparedQuery = this.queryBuilder().orderBy("done", true).where().like("task", "%" +  string +  "%").prepare();
 
         return this.query(preparedQuery);

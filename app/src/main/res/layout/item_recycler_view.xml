@@ -45,7 +45,8 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="@dimen/margin_4dp"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_subheading"/>
+                android:textSize="@dimen/text_subheading"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/task_item_text_view"

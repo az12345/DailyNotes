@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -20,14 +18,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.base.base_view.BaseActivity;
-import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,15 +39,15 @@ import butterknife.OnTextChanged;
  * Created by Юлия on 24.05.2017.
  */
 
-public class AddTaskActivity extends BaseActivity {
+public class AddTaskActivity extends BaseActivity implements TaskView {
 
     private Task task = new Task();
 
     private static final int REQUEST_TAKE_PHOTO = 1;
     private final String LOG_TAG = AddTaskActivity.class.getSimpleName();
 
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+    @InjectPresenter
+    TaskPresenter taskPresenter;
 
     @BindView(R.id.image)
     ImageView imageView;
@@ -65,19 +62,7 @@ public class AddTaskActivity extends BaseActivity {
 
     @OnClick(R.id.fab_write)
     public void onClick() {
-
-        if (task.getTask() != null) {
-            //todo
-            //in presenter
-            saveTask();
-            //interface
-
-        } else {
-            //todo  in error
-            Toast toast = Toast.makeText(this, getString(R.string.insert_task), Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }
+        taskPresenter.saveTask(task);
     }
 
 
@@ -94,10 +79,23 @@ public class AddTaskActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_task_fragment);
+        setContentView(R.layout.fragment_new_task);
         ButterKnife.bind(this);
+        //todo date java 8
+        dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",
+                new Date(System.currentTimeMillis())));
+    }
 
-        dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", new Date(System.currentTimeMillis())));
+    @Override
+    public void showSaveSuccess() {
+        finish();
+    }
+
+    @Override
+    public void showMessageTaskIsEmpty() {
+        Toast toast = Toast.makeText(this, getString(R.string.insert_task), Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override
@@ -133,6 +131,7 @@ public class AddTaskActivity extends BaseActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,};
 
+
     private boolean checkPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             int result;
@@ -155,7 +154,8 @@ public class AddTaskActivity extends BaseActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
         if (requestCode == 100) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -163,20 +163,6 @@ public class AddTaskActivity extends BaseActivity {
             return;
         }
     }
-
-
-    private void saveTask() {
-        task.setTaskDate(new Date(System.currentTimeMillis()));
-        task.setDone(false);
-        try {
-            HelperFactory.getHelper().getTaskDAO().create(task);
-        } catch (SQLException e) {
-            //todo toast
-
-        }
-        Log.d(LOG_TAG, "added " + task);
-    }
-
 }
 
 

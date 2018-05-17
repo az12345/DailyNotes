@@ -9,6 +9,8 @@ public final class Constants {
     public static final int TYPE_NOTE = 1;
     public static final int TYPE_TASK = 2;
 
+    public static final int EMPTY_VIEW = 1;
+
 
     public static final String SORT ="sort";
 

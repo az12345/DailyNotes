@@ -10,6 +10,7 @@ import com.carpediemsolution.dailynotes.dao.HelperFactory;
  */
 
 public class App extends Application {
+
     private static Context appContext;
 
     public static Context getAppContext() {
