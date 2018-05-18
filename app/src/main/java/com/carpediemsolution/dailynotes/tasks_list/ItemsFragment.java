@@ -49,7 +49,7 @@ import butterknife.Unbinder;
 public class ItemsFragment extends BaseFragment implements
         OnBackListener, TaskSearchView, ItemsView {
 
-    private final String TAG = ItemsFragment.class.getSimpleName();
+   // private final String TAG = ItemsFragment.class.getSimpleName();
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -87,10 +87,6 @@ public class ItemsFragment extends BaseFragment implements
         setSearchEditTextListener();
 
         itemsPresenter.getItems();
-
-      //  List<String> myList =
-             //   Arrays.asList("a1", "a2", "b1", "c2", "c1");
-       // //myList.stream().filter("a3"::equals).findFirst().get();
 
         return view;
     }

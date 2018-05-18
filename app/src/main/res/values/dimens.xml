@@ -7,6 +7,6 @@
     <dimen name="margin_4dp">4dp</dimen>
     <dimen name="margin_2dp">2dp</dimen>
     <dimen name="margin_1dp">1dp</dimen>
-    <dimen name="text_heading">10sp</dimen>
-    <dimen name="text_subheading">4sp</dimen>
+    <dimen name="text_heading">18sp</dimen>
+    <dimen name="text_subheading">16sp</dimen>
 </resources>

@@ -2,43 +2,68 @@ package com.carpediemsolution.dailynotes.model;
 
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 @DatabaseTable(tableName="notes")
 public class Note extends AbstractItem {
 
-    /* @DatabaseField(columnName="ala")
-      protected String ala;
+    @Override
+    public int getId() {
+        return super.getId();
+    }
 
-      public String getAla() {
-              return ala;
-      }
+    @Override
+    public String getTask() {
+        return super.getTask();
+    }
 
-      public void setAla(String ala) {
-              this.ala = ala;
-      }
+    @Override
+    public Date getTaskDate() {
+        return super.getTaskDate();
+    }
 
-      public Atividade(String name, Date date, String type, String ala) {
-              this.setName(name);
-              this.setDate(date);
-              this.setTipo(type);
-              this.setAla(ala);
-      }
+    @Override
+    public boolean isDone() {
+        return super.isDone();
+    }
 
-      Atividade(){
-      }
+    @Override
+    public String getImageUri() {
+        return super.getImageUri();
+    }
 
-      @Override
-      public void setName(String name) {
-              this.name = name;
-      }
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+    }
 
-      @Override
-      public void setDate(Date date) {
-              this.date = date;
-      }
+    @Override
+    public void setTask(String task) {
+        super.setTask(task);
+    }
 
-      @Override
-      public void setType(String type) {
-              this.type = type;
-      } */
+    @Override
+    public void setTaskDate(Date taskDate) {
+        super.setTaskDate(taskDate);
+    }
 
+    @Override
+    public void setDone(boolean done) {
+        super.setDone(done);
+    }
+
+    @Override
+    public void setImageUri(String imageUri) {
+        super.setImageUri(imageUri);
+    }
+
+    @Override
+    public int getType() {
+        return super.getType();
+    }
+
+    @Override
+    public void setType(int type) {
+        super.setType(type);
+    }
 }

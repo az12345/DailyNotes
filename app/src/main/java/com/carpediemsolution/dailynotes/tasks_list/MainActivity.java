@@ -73,4 +73,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(event);
     }
+
+    //todo
+    /***
+     * pin enter
+     * task tree
+     *
+     */
 }

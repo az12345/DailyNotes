@@ -5,6 +5,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.carpediemsolution.dailynotes.base.BasePresenter;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
+import com.carpediemsolution.dailynotes.utils.Log;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -12,9 +13,8 @@ import java.util.Date;
 @InjectViewState
 public class TaskPresenter extends BasePresenter<TaskView> {
 
-    private static final String TAG = TaskPresenter.class.getSimpleName();
-
     public void saveTask(Task task) {
+
         if (task != null && task.getTask() != null && !("").equals(task.getTask())) {
 
             task.setTaskDate(new Date(System.currentTimeMillis()));
@@ -25,9 +25,10 @@ public class TaskPresenter extends BasePresenter<TaskView> {
                 getViewState().showSaveSuccess();
 
             } catch (SQLException e) {
+                Log.v("db error:  ".concat(e.toString()));
                 getViewState().showError("Error while saving!");
             }
-            // Log.d(LOG_TAG, "added " + task);
+
         } else getViewState().showMessageTaskIsEmpty();
     }
 }
