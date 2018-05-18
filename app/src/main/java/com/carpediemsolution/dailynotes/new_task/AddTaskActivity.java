@@ -1,16 +1,13 @@
 package com.carpediemsolution.dailynotes.new_task;
 
-import android.Manifest;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,17 +19,16 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.base.base_view.BaseActivity;
 import com.carpediemsolution.dailynotes.model.Task;
+import com.carpediemsolution.dailynotes.utils.PermissionsUtils;
 import com.squareup.picasso.Picasso;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+
+import static com.carpediemsolution.dailynotes.utils.PermissionsUtils.REQUEST_CODE_STORAGE;
 
 
 /**
@@ -41,10 +37,11 @@ import butterknife.OnTextChanged;
 
 public class AddTaskActivity extends BaseActivity implements TaskView {
 
-    private Task task = new Task();
+    private final String LOG_TAG = AddTaskActivity.class.getSimpleName();
 
     private static final int REQUEST_TAKE_PHOTO = 1;
-    private final String LOG_TAG = AddTaskActivity.class.getSimpleName();
+
+    private Task task;
 
     @InjectPresenter
     TaskPresenter taskPresenter;
@@ -54,25 +51,28 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
     @BindView(R.id.date_textview)
     TextView dateTextView;
 
+    private String taskText = "";
+
     @OnTextChanged(R.id.new_task)
     public void textChanged(CharSequence s) {
-        task.setTask(s.toString());
+        taskText = s.toString();
         Log.d(LOG_TAG, s.toString());
     }
 
     @OnClick(R.id.fab_write)
     public void onClick() {
+        task = new Task();
+        task.setTask(taskText);
         taskPresenter.saveTask(task);
     }
 
 
     @OnClick(R.id.add_photo)
     public void addImage() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            checkPermissions();
+        PermissionsUtils permissionsUtils = new PermissionsUtils(this);
+        if (permissionsUtils.isExternalStoragePermission()) {
+            takeImage();
         }
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, REQUEST_TAKE_PHOTO);
     }
 
 
@@ -81,6 +81,7 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_new_task);
         ButterKnife.bind(this);
+
         //todo date java 8
         dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",
                 new Date(System.currentTimeMillis())));
@@ -96,6 +97,11 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
         Toast toast = Toast.makeText(this, getString(R.string.insert_task), Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    private void takeImage() {
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, REQUEST_TAKE_PHOTO);
     }
 
     @Override
@@ -127,40 +133,19 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
         }
     }
 
-    private String[] permissions = new String[]{
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,};
-
-
-    private boolean checkPermissions() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            int result;
-            List<String> listPermissionsNeeded = new ArrayList<>();
-            for (String p : permissions) {
-                result = ContextCompat.checkSelfPermission(this, p);
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    listPermissionsNeeded.add(p);
-                }
-            }
-            if (!listPermissionsNeeded.isEmpty()) {
-                ActivityCompat.requestPermissions(this,
-                        listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
-                        100);
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
-        if (requestCode == 100) {
+        if (requestCode == REQUEST_CODE_STORAGE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takeImage();
             }
-            return;
+        }
+
+        else {
+            //todo
         }
     }
 }

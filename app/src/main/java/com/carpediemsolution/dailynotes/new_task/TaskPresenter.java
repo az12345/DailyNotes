@@ -1,6 +1,6 @@
 package com.carpediemsolution.dailynotes.new_task;
 
-import android.support.annotation.NonNull;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.carpediemsolution.dailynotes.base.BasePresenter;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
@@ -15,10 +15,11 @@ public class TaskPresenter extends BasePresenter<TaskView> {
     private static final String TAG = TaskPresenter.class.getSimpleName();
 
     public void saveTask(Task task) {
-        if (task != null && task.getTask() != null) {
+        if (task != null && task.getTask() != null && !("").equals(task.getTask())) {
 
             task.setTaskDate(new Date(System.currentTimeMillis()));
             task.setDone(false);
+
             try {
                 HelperFactory.getHelper().getTaskDAO().create(task);
                 getViewState().showSaveSuccess();

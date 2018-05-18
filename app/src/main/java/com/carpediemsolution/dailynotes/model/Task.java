@@ -21,7 +21,67 @@ public class Task extends AbstractItem{
     @DatabaseField(canBeNull = true, dataType = DataType.INTEGER, columnName = LEVEL)
     private int level;
 
+    @Override
+    public int getId() {
+        return super.getId();
+    }
 
+    @Override
+    public String getTask() {
+        return super.getTask();
+    }
+
+    @Override
+    public Date getTaskDate() {
+        return super.getTaskDate();
+    }
+
+    @Override
+    public boolean isDone() {
+        return super.isDone();
+    }
+
+    @Override
+    public String getImageUri() {
+        return super.getImageUri();
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+    }
+
+    @Override
+    public void setTask(String task) {
+        super.setTask(task);
+    }
+
+    @Override
+    public void setTaskDate(Date taskDate) {
+        super.setTaskDate(taskDate);
+    }
+
+    @Override
+    public void setDone(boolean done) {
+        super.setDone(done);
+    }
+
+    @Override
+    public void setImageUri(String imageUri) {
+        super.setImageUri(imageUri);
+    }
+
+    @Override
+    public int getType() {
+        return super.getType();
+    }
+
+    @Override
+    public void setType(int type) {
+        super.setType(type);
+    }
+
+    /**/
     public int getIdParent() {
         return idParent;
     }
@@ -29,7 +89,6 @@ public class Task extends AbstractItem{
     public int getLevel() {
         return level;
     }
-
 
     public void setIdParent(int idParent) {
         this.idParent = idParent;

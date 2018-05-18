@@ -32,6 +32,7 @@ import com.carpediemsolution.dailynotes.tasks_list.view.ItemsView;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
 import com.carpediemsolution.dailynotes.tasks_list.view.TaskSearchView;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,6 +87,10 @@ public class ItemsFragment extends BaseFragment implements
         setSearchEditTextListener();
 
         itemsPresenter.getItems();
+
+      //  List<String> myList =
+             //   Arrays.asList("a1", "a2", "b1", "c2", "c1");
+       // //myList.stream().filter("a3"::equals).findFirst().get();
 
         return view;
     }
