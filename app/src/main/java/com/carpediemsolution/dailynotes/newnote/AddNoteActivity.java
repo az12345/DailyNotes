@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.new_note;
+package com.carpediemsolution.dailynotes.newnote;
 
 import com.carpediemsolution.dailynotes.base.base_view.BaseActivity;
 

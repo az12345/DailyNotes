@@ -2,7 +2,7 @@ package com.carpediemsolution.dailynotes;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.carpediemsolution.dailynotes.tasks_list.MainActivity;
+import com.carpediemsolution.dailynotes.taskslist.MainActivity;
 
 
 /**

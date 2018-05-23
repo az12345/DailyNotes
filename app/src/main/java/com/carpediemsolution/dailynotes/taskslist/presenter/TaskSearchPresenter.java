@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.tasks_list.presenter;
+package com.carpediemsolution.dailynotes.taskslist.presenter;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,7 +11,7 @@ import com.carpediemsolution.dailynotes.app.App;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.Constants;
-import com.carpediemsolution.dailynotes.tasks_list.view.TaskSearchView;
+import com.carpediemsolution.dailynotes.taskslist.view.TaskSearchView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 

@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.tasks_list.view;
+package com.carpediemsolution.dailynotes.taskslist.view;
 
 
 import com.carpediemsolution.dailynotes.base.base_view.BaseView;

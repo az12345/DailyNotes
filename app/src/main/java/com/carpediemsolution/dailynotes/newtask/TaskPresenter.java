@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.new_task;
+package com.carpediemsolution.dailynotes.newtask;
 
 
 import com.arellomobile.mvp.InjectViewState;
@@ -13,9 +13,12 @@ import java.util.Date;
 @InjectViewState
 public class TaskPresenter extends BasePresenter<TaskView> {
 
-    public void saveTask(Task task) {
+    public void saveTask() {
 
-        if (task != null && task.getTask() != null && !("").equals(task.getTask())) {
+        Task task = new Task();
+        task.setTask(getViewState().getTaskData());
+
+        if (task.getTask() != null && !("").equals(task.getTask())) {
 
             task.setTaskDate(new Date(System.currentTimeMillis()));
             task.setDone(false);

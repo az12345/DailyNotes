@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
 import com.carpediemsolution.dailynotes.R;
-import com.carpediemsolution.dailynotes.tasks_list.MainActivity;
+import com.carpediemsolution.dailynotes.taskslist.MainActivity;
 
 /**
  * Created by Юлия on 28.05.2017.

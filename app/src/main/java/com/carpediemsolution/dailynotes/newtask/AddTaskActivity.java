@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.new_task;
+package com.carpediemsolution.dailynotes.newtask;
 
 
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.base.base_view.BaseActivity;
-import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.PermissionsUtils;
 import com.squareup.picasso.Picasso;
 import java.io.File;
@@ -26,7 +24,6 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
 import static com.carpediemsolution.dailynotes.utils.PermissionsUtils.REQUEST_CODE_STORAGE;
 
@@ -41,29 +38,21 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
 
     private static final int REQUEST_TAKE_PHOTO = 1;
 
-    private Task task;
+   // private Task task;
 
     @InjectPresenter
     TaskPresenter taskPresenter;
 
     @BindView(R.id.image)
     ImageView imageView;
+    @BindView(R.id.new_task)
+    TextView taskDataTextView;
     @BindView(R.id.date_textview)
     TextView dateTextView;
 
-    private String taskText = "";
-
-    @OnTextChanged(R.id.new_task)
-    public void textChanged(CharSequence s) {
-        taskText = s.toString();
-        Log.d(LOG_TAG, s.toString());
-    }
-
     @OnClick(R.id.fab_write)
     public void onClick() {
-        task = new Task();
-        task.setTask(taskText);
-        taskPresenter.saveTask(task);
+        taskPresenter.saveTask();
     }
 
 
@@ -85,6 +74,11 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
         //todo date java 8
         dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",
                 new Date(System.currentTimeMillis())));
+    }
+
+    @Override
+    public String getTaskData() {
+     return taskDataTextView.getText().toString();
     }
 
     @Override
@@ -120,7 +114,7 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
-                task.setImageUri(imgDecodableString);
+               //todo task.setImageUri(imgDecodableString);
 
                 Picasso.with(this)
                         .load(new File(imgDecodableString))

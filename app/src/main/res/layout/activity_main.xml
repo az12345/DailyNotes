@@ -5,4 +5,4 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/fromCont"
-    tools:context="com.carpediemsolution.dailynotes.tasks_list.MainActivity"/>
+    tools:context="com.carpediemsolution.dailynotes.taskslist.MainActivity"/>

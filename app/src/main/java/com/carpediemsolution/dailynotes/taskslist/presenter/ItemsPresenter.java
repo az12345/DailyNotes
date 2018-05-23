@@ -1,10 +1,10 @@
-package com.carpediemsolution.dailynotes.tasks_list.presenter;
+package com.carpediemsolution.dailynotes.taskslist.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.carpediemsolution.dailynotes.base.BasePresenter;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.tasks_list.view.ItemsView;
+import com.carpediemsolution.dailynotes.taskslist.view.ItemsView;
 import com.carpediemsolution.dailynotes.utils.Log;
 
 import java.sql.SQLException;

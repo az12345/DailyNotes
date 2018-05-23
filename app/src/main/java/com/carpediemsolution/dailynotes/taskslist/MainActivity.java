@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.tasks_list;
+package com.carpediemsolution.dailynotes.taskslist;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -16,7 +16,7 @@ import com.carpediemsolution.dailynotes.utils.OnBackListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ItemsFragment taskList;
+    private ItemsFragment itemsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTaskListFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (taskList == null) {
-            taskList = new ItemsFragment();
+        if (itemsFragment == null) {
+            itemsFragment = new ItemsFragment();
             fragmentManager.beginTransaction()
-                    .add(R.id.fromCont, taskList)
+                    .add(R.id.fromCont, itemsFragment)
                     .commit();
         }
     }

@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.tasks_list;
+package com.carpediemsolution.dailynotes.taskslist;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,18 +21,17 @@ import android.widget.EditText;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.carpediemsolution.dailynotes.base.base_view.BaseFragment;
-import com.carpediemsolution.dailynotes.new_task.AddTaskActivity;
+import com.carpediemsolution.dailynotes.newtask.AddTaskActivity;
 import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.utils.view.UserSettingActivity;
 import com.carpediemsolution.dailynotes.adapter.ItemsAdapter;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.tasks_list.presenter.ItemsPresenter;
-import com.carpediemsolution.dailynotes.tasks_list.presenter.TaskSearchPresenter;
-import com.carpediemsolution.dailynotes.tasks_list.view.ItemsView;
+import com.carpediemsolution.dailynotes.taskslist.presenter.ItemsPresenter;
+import com.carpediemsolution.dailynotes.taskslist.presenter.TaskSearchPresenter;
+import com.carpediemsolution.dailynotes.taskslist.view.ItemsView;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
-import com.carpediemsolution.dailynotes.tasks_list.view.TaskSearchView;
+import com.carpediemsolution.dailynotes.taskslist.view.TaskSearchView;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -111,6 +110,8 @@ public class ItemsFragment extends BaseFragment implements
 
     @Override
     public void updateItems(List<Task> taskList) {
+        //todo
+        /* implements RepositoryRowView*/
         recyclerView.setAdapter(adapter);
         adapter.setTasks(taskList);
         adapter.notifyDataSetChanged();
