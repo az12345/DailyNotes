@@ -52,7 +52,7 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
 
     @OnClick(R.id.fab_write)
     public void onClick() {
-        taskPresenter.saveTask();
+        taskPresenter.saveTask(taskDataTextView.getText().toString());
     }
 
 
@@ -70,16 +70,13 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_new_task);
         ButterKnife.bind(this);
+        taskPresenter.init();
 
         //todo date java 8
         dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",
                 new Date(System.currentTimeMillis())));
     }
 
-    @Override
-    public String getTaskData() {
-     return taskDataTextView.getText().toString();
-    }
 
     @Override
     public void showSaveSuccess() {

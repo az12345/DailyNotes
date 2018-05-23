@@ -1,6 +1,5 @@
 package com.carpediemsolution.dailynotes.taskslist;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -29,7 +28,7 @@ import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.taskslist.presenter.ItemsPresenter;
 import com.carpediemsolution.dailynotes.taskslist.presenter.TaskSearchPresenter;
 import com.carpediemsolution.dailynotes.taskslist.view.ItemsView;
-import com.carpediemsolution.dailynotes.utils.OnBackListener;
+
 import com.carpediemsolution.dailynotes.taskslist.view.TaskSearchView;
 
 import java.util.List;
@@ -45,14 +44,12 @@ import butterknife.Unbinder;
  * Created by Юлия on 24.05.2017.
  */
 
-public class ItemsFragment extends BaseFragment implements
-        OnBackListener, TaskSearchView, ItemsView {
+public class ItemsFragment extends BaseFragment implements TaskSearchView, ItemsView {
 
    // private final String TAG = ItemsFragment.class.getSimpleName();
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-
     @BindView(R.id.tool_bar)
     Toolbar mToolbar;
     @BindView(R.id.search)
@@ -61,12 +58,12 @@ public class ItemsFragment extends BaseFragment implements
     FloatingActionButton fab;
 
     @InjectPresenter
-    TaskSearchPresenter presenter;
+    TaskSearchPresenter taskSearchPresenter;
     @InjectPresenter
     ItemsPresenter itemsPresenter;
 
-    private Unbinder unbinder;
     private ItemsAdapter adapter;
+    private Unbinder unbinder;
 
     @OnClick(R.id.fab_add)
     public void onNewTaskClick() {
@@ -85,6 +82,7 @@ public class ItemsFragment extends BaseFragment implements
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
         setSearchEditTextListener();
 
+        itemsPresenter.init();
         itemsPresenter.getItems();
 
         return view;
@@ -93,13 +91,9 @@ public class ItemsFragment extends BaseFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter.init(searchEditText);
+        taskSearchPresenter.init(searchEditText);
     }
 
-    private void addNewTask() {
-        Intent intent = new Intent(getActivity(), AddTaskActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void showItems(List<Task> tasks) {
@@ -110,8 +104,6 @@ public class ItemsFragment extends BaseFragment implements
 
     @Override
     public void updateItems(List<Task> taskList) {
-        //todo
-        /* implements RepositoryRowView*/
         recyclerView.setAdapter(adapter);
         adapter.setTasks(taskList);
         adapter.notifyDataSetChanged();
@@ -124,6 +116,11 @@ public class ItemsFragment extends BaseFragment implements
             else
                 searchEditText.setHint(getActivity().getResources().getString(R.string.app_name));
         });
+    }
+
+    private void addNewTask() {
+        Intent intent = new Intent(getActivity(), AddTaskActivity.class);
+        startActivity(intent);
     }
 
     /* base */
@@ -144,19 +141,11 @@ public class ItemsFragment extends BaseFragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    private Activity activity = getActivity();
-
-    @Override
-    public void onBackPressed() {
-        if (activity != null)
-            activity.finish();
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.disposeObservable();
+        taskSearchPresenter.disposeObservable();
         unbinder.unbind();
     }
-
 }
