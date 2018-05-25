@@ -13,13 +13,18 @@ public class Note extends AbstractItem {
     }
 
     @Override
-    public String getTask() {
-        return super.getTask();
+    public String getData() {
+        return super.getData();
     }
 
     @Override
-    public Date getTaskDate() {
-        return super.getTaskDate();
+    public void setData(String data) {
+        super.setData(data);
+    }
+
+    @Override
+    public Date getDate() {
+        return super.getDate();
     }
 
     @Override
@@ -37,14 +42,10 @@ public class Note extends AbstractItem {
         super.setId(id);
     }
 
-    @Override
-    public void setTask(String task) {
-        super.setTask(task);
-    }
 
     @Override
-    public void setTaskDate(Date taskDate) {
-        super.setTaskDate(taskDate);
+    public void setDate(Date date) {
+        super.setDate(date);
     }
 
     @Override

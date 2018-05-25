@@ -3,6 +3,7 @@ package com.carpediemsolution.dailynotes.newtask.model;
 import android.support.annotation.NonNull;
 
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
+import com.carpediemsolution.dailynotes.dao.TaskDao;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.Log;
 
@@ -17,13 +18,13 @@ public class TaskInteractor implements TaskInteractorImpl {
                              @NonNull TaskLoaderListener taskLoaderListener) {
 
         Task task = new Task();
-        task.setTask(taskData);
+        task.setData(taskData);
 
-        task.setTaskDate(new Date(System.currentTimeMillis()));
+       // task.setDate(new Date(System.currentTimeMillis()));
         task.setDone(false);
 
         try {
-            HelperFactory.getHelper().getTaskDAO().create(task);
+           new HelperFactory().saveTask(task);
             taskLoaderListener.onFinished();
 
         } catch (SQLException e) {

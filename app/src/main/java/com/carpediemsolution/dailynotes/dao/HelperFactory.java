@@ -2,6 +2,7 @@ package com.carpediemsolution.dailynotes.dao;
 
 import android.content.Context;
 
+import com.carpediemsolution.dailynotes.model.AbstractItem;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
@@ -31,5 +32,13 @@ public class HelperFactory {
 
     public static List<Task> getAllTasks() throws SQLException {
         return databaseHelper.getTaskDAO().getAllTasks();
+    }
+
+    public int saveTask(Task task)throws SQLException{
+        return HelperFactory.getHelper().getTaskDAO().create(task);
+    }
+
+    public Task getTaskById(int id) throws SQLException {
+        return HelperFactory.getHelper().getTaskDAO().queryForId(id);
     }
 }

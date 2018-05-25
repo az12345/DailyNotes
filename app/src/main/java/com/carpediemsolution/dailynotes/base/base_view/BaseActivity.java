@@ -32,7 +32,6 @@ public abstract class BaseActivity extends MvpAppCompatActivity implements BaseV
     }
 
 
-
     @Override
     public void showLoading(@NonNull String loadingText) {
         progressDialog = ProgressDialog.show(this, "", loadingText, true);
@@ -46,7 +45,6 @@ public abstract class BaseActivity extends MvpAppCompatActivity implements BaseV
     }
 
 
-
     @Override
     public void showError(@NonNull String errorDescription) {
         Toast.makeText(this, errorDescription,
@@ -55,7 +53,7 @@ public abstract class BaseActivity extends MvpAppCompatActivity implements BaseV
 
     @Override
     public void showUnknownError() {
-        Toast.makeText(this, "Что-то пошло не так!",
+        Toast.makeText(this, getString(R.string.smth_went_wrong),
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -67,7 +65,4 @@ public abstract class BaseActivity extends MvpAppCompatActivity implements BaseV
             progressDialog.dismiss();
         }
     }
-
-
-
 }

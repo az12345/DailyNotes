@@ -1,8 +1,9 @@
-package com.carpediemsolution.dailynotes.newtask;
+package com.carpediemsolution.dailynotes.newtask.presenter;
 
 
 import com.arellomobile.mvp.InjectViewState;
 import com.carpediemsolution.dailynotes.base.BasePresenter;
+import com.carpediemsolution.dailynotes.newtask.TaskView;
 import com.carpediemsolution.dailynotes.newtask.model.TaskInteractor;
 import com.carpediemsolution.dailynotes.newtask.model.TaskLoaderListener;
 

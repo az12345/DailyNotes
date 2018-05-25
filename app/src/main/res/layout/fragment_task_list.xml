@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/constr"
-    tools:context="com.carpediemsolution.dailynotes.taskslist.MainActivity">
+    tools:context="com.carpediemsolution.dailynotes.itemslist.MainActivity">
 
     <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.carpediemsolution.dailynotes.taskslist.MainActivity"
+            android:name="com.carpediemsolution.dailynotes.itemslist.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
@@ -41,6 +41,6 @@
 
         <activity
             android:name="com.carpediemsolution.dailynotes.utils.view.UserSettingActivity"
-            android:parentActivityName="com.carpediemsolution.dailynotes.taskslist.MainActivity" />
+            android:parentActivityName="com.carpediemsolution.dailynotes.itemslist.MainActivity" />
     </application>
 </manifest>

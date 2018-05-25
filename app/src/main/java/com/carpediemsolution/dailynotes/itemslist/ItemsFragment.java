@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.taskslist;
+package com.carpediemsolution.dailynotes.itemslist;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -25,11 +25,11 @@ import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.utils.view.UserSettingActivity;
 import com.carpediemsolution.dailynotes.adapter.ItemsAdapter;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.taskslist.presenter.ItemsPresenter;
-import com.carpediemsolution.dailynotes.taskslist.presenter.TaskSearchPresenter;
-import com.carpediemsolution.dailynotes.taskslist.view.ItemsView;
+import com.carpediemsolution.dailynotes.itemslist.presenter.ItemsPresenter;
+import com.carpediemsolution.dailynotes.itemslist.presenter.TaskSearchPresenter;
+import com.carpediemsolution.dailynotes.itemslist.view.ItemsView;
 
-import com.carpediemsolution.dailynotes.taskslist.view.TaskSearchView;
+import com.carpediemsolution.dailynotes.itemslist.view.TaskSearchView;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.taskslist.view;
+package com.carpediemsolution.dailynotes.itemslist.view;
 
 
 import com.arellomobile.mvp.MvpView;

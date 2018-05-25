@@ -43,7 +43,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Task.class);
         }
         catch (SQLException e){
-            Log.e(TAG, "error creating DB " + DATABASE_NAME);
+            Log.e(TAG, "error creating DB ".concat(DATABASE_NAME));
             throw new RuntimeException(e);
         }
     }
@@ -58,7 +58,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             onCreate(db, connectionSource);
         }
         catch (SQLException e){
-            Log.e(TAG,"error upgrading db "+DATABASE_NAME+"from ver "+oldVer);
+            Log.e(TAG,"error upgrading db ".concat(DATABASE_NAME+"from ver "+oldVer));
             throw new RuntimeException(e);
         }
     }

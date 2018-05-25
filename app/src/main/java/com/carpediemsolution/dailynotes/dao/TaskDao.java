@@ -5,8 +5,12 @@ import com.carpediemsolution.dailynotes.model.Task;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.support.ConnectionSource;
+
 import java.sql.SQLException;
 import java.util.List;
+
+import static com.carpediemsolution.dailynotes.model.AbstractItem.FIELD_DATA;
+import static com.carpediemsolution.dailynotes.model.AbstractItem.FIELD_DATE;
 
 /**
  * Created by Юлия on 30.05.2017.
@@ -23,36 +27,40 @@ public class TaskDao extends BaseDaoImpl<Task, Integer> {
         return this.queryForId(id);
     }
 
-    public List<Task>getAllTasks()throws SQLException{
-       return this.queryForAll();
+
+    public List<Task> getAllTasks() throws SQLException {
+        return this.queryForAll();
     }
 
-    public List<Task> getAllTasksByDate() throws SQLException{
+    public List<Task> getAllTasksByDate() throws SQLException {
         //метод без сортировки по дате
-        return this.queryBuilder().orderBy("taskDate", false).query();
+        return this.queryBuilder().orderBy(FIELD_DATE, false).query();
     }
 
-    public List<Task> getAllTasksByChecked() throws SQLException{
+    public List<Task> getAllTasksByChecked() throws SQLException {
         //метод без сортировки по отмеченной заметке
         return this.queryBuilder().orderBy("done", true).query();
     }
 
-    public List<Task> getAllTasksBySearchString(String string)throws SQLException{
-        PreparedQuery preparedQuery = this.queryBuilder().where().like("task", "%" +  string +  "%").prepare();
+    public List<Task> getAllTasksBySearchString(String string) throws SQLException {
+        PreparedQuery preparedQuery = this.queryBuilder().where()
+                .like(FIELD_DATA, "%" + string + "%").prepare();
 
         return this.query(preparedQuery);
     }
 
     public List<Task> getAllTasksBySearchStringOrderedByDate(String string)
-            throws SQLException{
-        PreparedQuery preparedQuery = this.queryBuilder().orderBy("taskDate", false)
-                .where().like("task", "%" +  string +  "%").prepare();
+            throws SQLException {
+        PreparedQuery preparedQuery = this.queryBuilder().orderBy(FIELD_DATE, false)
+                .where().like(FIELD_DATA, "%" + string + "%").prepare();
 
         return this.query(preparedQuery);
     }
 
-    public List<Task> getAllTasksBySearchStringOrderedByChecked(String string)throws SQLException{
-        PreparedQuery preparedQuery = this.queryBuilder().orderBy("done", true).where().like("task", "%" +  string +  "%").prepare();
+    public List<Task> getAllTasksBySearchStringOrderedByChecked(String string) throws SQLException {
+        PreparedQuery preparedQuery = this.queryBuilder()
+                .orderBy("done", true).where()
+                .like(FIELD_DATA, "%" + string + "%").prepare();
 
         return this.query(preparedQuery);
     }

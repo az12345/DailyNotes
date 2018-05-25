@@ -16,6 +16,8 @@ android {
         project.ext.set("archivesBaseName", "notes-" + defaultConfig.versionName);
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "android.test.InstrumentationTestRunner"
+
     }
 
 
@@ -98,6 +100,21 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Required for local unit tests (JUnit 4 framework)
+    testCompile 'junit:junit:4.12'
+
+    // Required for instrumented tests
+
+    compile 'com.android.support.test:rules:0.5'
+    compile 'com.android.support.test:runner:0.2'
+
+    androidTestCompile 'com.android.support:support-annotations:27.1.1'
+    androidTestCompile 'com.android.support:support-annotations:1.0.0';
+    androidTestCompile 'com.android.support.test:runner:0.2';
+    androidTestCompile 'com.android.support.test:rules:0.5';
+   // androidTestCompile 'com.android.support.test:testing-support-lib:0.3'
+
+
 
     /* support */
     compile 'com.android.support.constraint:constraint-layout:1.1.0'
@@ -128,4 +145,6 @@ dependencies {
     annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.3'
 
     compile 'com.arello-mobile:moxy-app-compat:1.5.3'
+  //  testImplementation 'junit:junit:4.12'
+
 }

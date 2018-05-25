@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.taskslist.presenter;
+package com.carpediemsolution.dailynotes.itemslist.presenter;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,7 +11,7 @@ import com.carpediemsolution.dailynotes.app.App;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.utils.Constants;
-import com.carpediemsolution.dailynotes.taskslist.view.TaskSearchView;
+import com.carpediemsolution.dailynotes.itemslist.view.TaskSearchView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 
@@ -27,10 +27,13 @@ import io.reactivex.observers.DisposableObserver;
 /**
  * Created by Юлия on 23.08.2017.
  */
+//todo interactor
+
 @InjectViewState
 public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
 
-    private static final String LOG_TAG = "TaskSearchPresenter";
+    private static final String LOG_TAG =TaskSearchPresenter.class.getSimpleName();
+
     private Disposable disposable;
     private List<Task>taskList;
 
@@ -70,19 +73,24 @@ public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
     }
 
     private List<Task> getSharedPreferencesSettings(String s) {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(App.getAppContext());
+        SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(App.getAppContext());
         boolean pref = sharedPrefs.getBoolean(Constants.SORT, false);
 
         if (pref) {
             try {
-                taskList = HelperFactory.getHelper().getTaskDAO().getAllTasksBySearchStringOrderedByChecked(s);
+                taskList = HelperFactory.getHelper().getTaskDAO()
+                        .getAllTasksBySearchStringOrderedByChecked(s);
             } catch (SQLException e) {
+                //todo
                 e.printStackTrace();
             }
         } else {
             try {
-                taskList = HelperFactory.getHelper().getTaskDAO().getAllTasksBySearchStringOrderedByDate(s);
+                taskList = HelperFactory.getHelper().getTaskDAO()
+                        .getAllTasks();
             } catch (SQLException e) {
+                //todo
                 e.printStackTrace();
             }
         }

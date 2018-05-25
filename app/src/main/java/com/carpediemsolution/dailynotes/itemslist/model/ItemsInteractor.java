@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.taskslist.model;
+package com.carpediemsolution.dailynotes.itemslist.model;
 
 import android.support.annotation.NonNull;
 
@@ -18,9 +18,9 @@ public class ItemsInteractor implements ItemsInteractorImpl {
         try {
             tasks = HelperFactory.getAllTasks();
         } catch (SQLException e) {
-            Log.v("sql ex!");
+            Log.v("sql ex!" + e.toString());
         }
-
+        if(tasks !=null)
         loaderListener.onFinished(tasks);
     }
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.base.base_view.BaseActivity;
+import com.carpediemsolution.dailynotes.newtask.presenter.TaskPresenter;
 import com.carpediemsolution.dailynotes.utils.PermissionsUtils;
 import com.squareup.picasso.Picasso;
 import java.io.File;

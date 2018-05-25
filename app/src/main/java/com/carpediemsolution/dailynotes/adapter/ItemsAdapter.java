@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private List<Task> tasks;
 
-    public ItemsAdapter(List<Task> tasks){
+    public ItemsAdapter(List<Task> tasks) {
         this.tasks = tasks;
     }
 
@@ -116,8 +117,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             vh.cardView.setCardBackgroundColor(Color.parseColor(generateItemColor()));
 
             //todo
-            vh.dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", task.getTaskDate()));
-            vh.taskTextView.setText(task.getTask());
+            vh.dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", task.getDate()));
+            vh.taskTextView.setText(task.getData());
             vh.doneCheckBox.setChecked(task.isDone());
             if (task.getImageUri() != null) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(350, 350);
@@ -133,15 +134,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     private String generateItemColor() {
-        List<String> colors = new ArrayList<>();
-        colors.add(Constants.colorOne);
-        colors.add(Constants.colorTwo);
-        colors.add(Constants.colorThree);
-        colors.add(Constants.colorFour);
-        colors.add(Constants.colorFive);
-        colors.add(Constants.colorSix);
-        colors.add(Constants.colorSeven);
-        colors.add(Constants.colorEight);
+        List<String> colors = Arrays.asList(Constants.colorOne,
+                Constants.colorTwo,
+                Constants.colorThree,
+                Constants.colorFour,
+                Constants.colorFive,
+                Constants.colorSix,
+                Constants.colorSeven,
+                Constants.colorEight);
 
         Collections.shuffle(colors);
         return colors.get(0);

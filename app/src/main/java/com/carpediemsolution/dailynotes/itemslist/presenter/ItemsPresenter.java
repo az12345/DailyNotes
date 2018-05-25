@@ -1,11 +1,11 @@
-package com.carpediemsolution.dailynotes.taskslist.presenter;
+package com.carpediemsolution.dailynotes.itemslist.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.carpediemsolution.dailynotes.base.BasePresenter;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.taskslist.model.ItemsInteractor;
-import com.carpediemsolution.dailynotes.taskslist.model.LoaderListener;
-import com.carpediemsolution.dailynotes.taskslist.view.ItemsView;
+import com.carpediemsolution.dailynotes.itemslist.model.ItemsInteractor;
+import com.carpediemsolution.dailynotes.itemslist.model.LoaderListener;
+import com.carpediemsolution.dailynotes.itemslist.view.ItemsView;
 
 import java.util.List;
 

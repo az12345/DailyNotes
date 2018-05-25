@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.taskslist;
+package com.carpediemsolution.dailynotes.itemslist;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 v.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
                     //todo
                     assert imm != null;
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

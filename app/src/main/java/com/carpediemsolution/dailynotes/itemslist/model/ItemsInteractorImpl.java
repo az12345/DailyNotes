@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.taskslist.model;
+package com.carpediemsolution.dailynotes.itemslist.model;
 
 import android.support.annotation.NonNull;
 
