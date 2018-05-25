@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+
 import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
+
 
 public class MainActivity extends AppCompatActivity {
 

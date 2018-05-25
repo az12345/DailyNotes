@@ -1,11 +1,6 @@
 package com.carpediemsolution.dailynotes;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
-
-import com.carpediemsolution.dailynotes.dao.HelperFactory;
 
 import com.carpediemsolution.dailynotes.model.Task;
 

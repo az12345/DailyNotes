@@ -11,15 +11,16 @@ import com.carpediemsolution.dailynotes.model.Task;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.List;
 
+
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 
 /**
  * Instrumentation test, which will execute on an Android device.
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * создание и запись экземпляра класса Task
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -28,8 +29,6 @@ public class TaskInstrumentedTest {
     private Context appContext;
 
     private Task task;
-    //private Date date;
-
     private Task savedTask;
     private int idSavedTask;
 
@@ -37,25 +36,7 @@ public class TaskInstrumentedTest {
     public void setUp() throws Exception {
         appContext = InstrumentationRegistry.getTargetContext();
         task = new Task();
-      //  date = new Date();
     }
-
-   /* @Test
-    public void useAppContext() throws Exception {
-        //  assertEquals("com.carpediemsolution.testfragment",
-             ///   appContext.getPackageName());
-    }*/
-
-  /*  @Test
-    public void nullStringTest() throws Exception {
-
-        List<Task> taskList = HelperFactory.getHelper()
-                .getTaskDAO().getAllTasksByDate();
-        for(Task task : taskList) {
-            String str = task.getData();
-            assertTrue(!str.isEmpty());
-        }
-    }*/
 
     @Test
     public void saveAndReadValues() throws Exception {
@@ -67,7 +48,7 @@ public class TaskInstrumentedTest {
         idSavedTask = new HelperFactory().saveTask(task);
         savedTask = new HelperFactory().getTaskById(idSavedTask);
 
-
+        assertNotNull(savedTask);
         assertTrue(equalsTo());
     }
 
