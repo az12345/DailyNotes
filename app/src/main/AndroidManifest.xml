@@ -7,16 +7,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.carpediemsolution.dailynotes.app.TaskApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:name="com.carpediemsolution.dailynotes.app.App"
+        android:icon="${appIcon}"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.carpediemsolution.dailynotes.MainActivity"
+            android:name="com.carpediemsolution.dailynotes.itemslist.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
@@ -27,12 +25,22 @@
         </activity>
 
         <activity
-            android:name="com.carpediemsolution.dailynotes.OpenImageActivity"
+            android:name=".newnote.AddNoteActivity"
             android:label=" "
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.carpediemsolution.dailynotes.UserSettingActivity"
-            android:parentActivityName="com.carpediemsolution.dailynotes.MainActivity"/>
-</application>
+            android:name=".newtask.AddTaskActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.carpediemsolution.dailynotes.utils.view.OpenImageActivity"
+            android:label=" "
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.carpediemsolution.dailynotes.utils.view.UserSettingActivity"
+            android:parentActivityName="com.carpediemsolution.dailynotes.itemslist.MainActivity" />
+    </application>
 </manifest>

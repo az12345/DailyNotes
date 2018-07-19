@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Daily Notes</string>
-
     <string name="sure_to_delete">Выберите действие</string>
     <string name="remove">УДАЛИТЬ</string>
     <string name="cancel">ОТМЕНА</string>
@@ -8,4 +6,7 @@
     <string name="note">Заметка...</string>
     <string name="insert_task">Заметка пустая</string>
     <string name="edit">РЕДАКТИРОВАТЬ</string>
+    <string name="progress_loading">Загрузка...</string>
+    <string name="smth_went_wrong">Что-то пошло не так!</string>
+
 </resources>

@@ -3,6 +3,8 @@ package com.carpediemsolution.dailynotes.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.carpediemsolution.dailynotes.model.Note;
 import com.carpediemsolution.dailynotes.model.Task;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -25,10 +27,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private TaskDAO taskDao = null;
+    private TaskDao taskDao = null;
 
     public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME, null, DATABASE_VERSION);
+        super(context,DATABASE_NAME,
+                null, DATABASE_VERSION);
     }
 
     //Выполняется, когда файл с БД не найден на устройстве
@@ -36,10 +39,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource){
         try
         {
+            TableUtils.createTable(connectionSource, Note.class);
             TableUtils.createTable(connectionSource, Task.class);
         }
         catch (SQLException e){
-            Log.e(TAG, "error creating DB " + DATABASE_NAME);
+            Log.e(TAG, "error creating DB ".concat(DATABASE_NAME));
             throw new RuntimeException(e);
         }
     }
@@ -49,22 +53,25 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVer,
                           int newVer){
         try{
+            TableUtils.dropTable(connectionSource, Note.class, true);
             TableUtils.dropTable(connectionSource, Task.class, true);
             onCreate(db, connectionSource);
         }
         catch (SQLException e){
-            Log.e(TAG,"error upgrading db "+DATABASE_NAME+"from ver "+oldVer);
+            Log.e(TAG,"error upgrading db ".concat(DATABASE_NAME+"from ver "+oldVer));
             throw new RuntimeException(e);
         }
     }
 
     //синглтон для TaskDAO
-    public TaskDAO getTaskDAO() throws SQLException {
+    public TaskDao getTaskDAO() throws SQLException {
         if(taskDao == null){
-            taskDao = new TaskDAO(getConnectionSource(), Task.class);
+            taskDao = new TaskDao(getConnectionSource(), Task.class);
         }
         return taskDao;
     }
+
+
 
     //выполняется при закрытии приложения
     @Override
