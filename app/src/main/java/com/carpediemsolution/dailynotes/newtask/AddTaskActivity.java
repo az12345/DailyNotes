@@ -1,6 +1,7 @@
 package com.carpediemsolution.dailynotes.newtask;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,12 +17,15 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.carpediemsolution.dailynotes.R;
-import com.carpediemsolution.dailynotes.base.base_view.BaseActivity;
+import com.carpediemsolution.dailynotes.base.baseview.BaseActivity;
 import com.carpediemsolution.dailynotes.newtask.presenter.TaskPresenter;
+import com.carpediemsolution.dailynotes.utils.Log;
 import com.carpediemsolution.dailynotes.utils.PermissionsUtils;
 import com.squareup.picasso.Picasso;
+
 import java.io.File;
 import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,8 +42,6 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
     private final String LOG_TAG = AddTaskActivity.class.getSimpleName();
 
     private static final int REQUEST_TAKE_PHOTO = 1;
-
-   // private Task task;
 
     @InjectPresenter
     TaskPresenter taskPresenter;
@@ -65,22 +67,31 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
         }
     }
 
+    public static Intent newInstance(Activity activity) {
+        return new Intent(activity, AddTaskActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_new_task);
         ButterKnife.bind(this);
-        taskPresenter.init();
 
-        //todo date java 8
+        initViews();
+
+        taskPresenter.init();
+    }
+
+    private void initViews() {
         dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm",
                 new Date(System.currentTimeMillis())));
     }
 
-
     @Override
     public void showSaveSuccess() {
+        Log.v("showSaveSuccess");
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -92,8 +103,8 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
     }
 
     private void takeImage() {
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, REQUEST_TAKE_PHOTO);
+        startActivityForResult(new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), REQUEST_TAKE_PHOTO);
     }
 
     @Override
@@ -101,23 +112,24 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
 
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK && null != data) {
             try {
-                //todo wtf?
+
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
-                //
-                cursor.moveToFirst();
 
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imgDecodableString = cursor.getString(columnIndex);
-                cursor.close();
-               //todo task.setImageUri(imgDecodableString);
+                if (cursor != null) {
+                    cursor.moveToFirst();
 
-                Picasso.with(this)
-                        .load(new File(imgDecodableString))
-                        .into(imageView);
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgDecodableString = cursor.getString(columnIndex);
+                    cursor.close();
+                    //todo task.setImageUri(imgDecodableString);
 
+                    Picasso.with(this)
+                            .load(new File(imgDecodableString))
+                            .into(imageView);
+                }
             } catch (Exception e) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
                         .show();
@@ -134,9 +146,7 @@ public class AddTaskActivity extends BaseActivity implements TaskView {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 takeImage();
             }
-        }
-
-        else {
+        } else {
             //todo
         }
     }

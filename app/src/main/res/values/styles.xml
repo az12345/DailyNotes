@@ -40,7 +40,7 @@
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="android:textColorHint">@color/colorPrimaryDark</item>
-        <item name="android:textColor">@color/colorGrey</item>
+        <item name="android:textColor">@color/colorGray</item>
     </style>
 
     <!-- theme of Seaching Widget -->

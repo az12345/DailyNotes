@@ -53,7 +53,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVer,
                           int newVer){
         try{
-            
             TableUtils.dropTable(connectionSource, Note.class, true);
             TableUtils.dropTable(connectionSource, Task.class, true);
             onCreate(db, connectionSource);
@@ -66,12 +65,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     //синглтон для TaskDAO
     public TaskDao getTaskDAO() throws SQLException {
-        if(taskDao == null){
-            taskDao = new TaskDao(getConnectionSource(), Task.class);
-        }
-        return taskDao;
+        return  taskDao == null ? new TaskDao(getConnectionSource(), Task.class): taskDao;
     }
-
 
 
     //выполняется при закрытии приложения

@@ -37,10 +37,10 @@ public class HelperFactory {
     }
 
     public Task getTaskById(int id) throws SQLException {
-
-        //getTasks();
         return HelperFactory.getHelper().getTaskDAO().queryForId(id);
     }
 
-
+    public static void deleteItem(int id) throws SQLException{
+         HelperFactory.getHelper().getTaskDAO().deleteById(id);
+    }
 }

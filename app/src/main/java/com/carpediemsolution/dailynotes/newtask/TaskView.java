@@ -1,6 +1,6 @@
 package com.carpediemsolution.dailynotes.newtask;
 
-import com.carpediemsolution.dailynotes.base.base_view.BaseView;
+import com.carpediemsolution.dailynotes.base.baseview.BaseView;
 
 public interface TaskView extends BaseView {
 

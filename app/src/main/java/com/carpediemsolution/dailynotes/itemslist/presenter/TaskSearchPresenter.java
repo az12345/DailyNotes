@@ -1,17 +1,14 @@
 package com.carpediemsolution.dailynotes.itemslist.presenter;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.EditText;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.carpediemsolution.dailynotes.app.App;
 import com.carpediemsolution.dailynotes.dao.HelperFactory;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.utils.Constants;
 import com.carpediemsolution.dailynotes.itemslist.view.TaskSearchView;
+import com.carpediemsolution.dailynotes.utils.PreferencesUtils;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 
@@ -23,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
+
+import static com.carpediemsolution.dailynotes.utils.PreferencesUtils.SORT;
 
 /**
  * Created by Юлия on 23.08.2017.
@@ -69,29 +68,29 @@ public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
     }
 
     private List<Task> getSearchedTask(String taskSearched) {
-        return getSharedPreferencesSettings(taskSearched);
+        return getItemBySearchString(taskSearched);
     }
 
-    private List<Task> getSharedPreferencesSettings(String s) {
-        SharedPreferences sharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(App.getAppContext());
-        boolean pref = sharedPrefs.getBoolean(Constants.SORT, false);
+    private boolean isItemsSorted(){
+        return PreferencesUtils.getBoolData(SORT);
+    }
 
-        if (pref) {
+    private List<Task> getItemBySearchString(String s) {
+
+        if (isItemsSorted()) {
             try {
                 taskList = HelperFactory.getHelper().getTaskDAO()
                         .getAllTasksBySearchStringOrderedByChecked(s);
             } catch (SQLException e) {
-                //todo
-                e.printStackTrace();
+              com.carpediemsolution.dailynotes.utils.Log.v(" error".concat(e.toString()));
             }
         } else {
             try {
+                //todo sorted items
                 taskList = HelperFactory.getHelper().getTaskDAO()
-                        .getAllTasks();
+                        .getAllTasksBySearchStringOrderedByChecked(s);
             } catch (SQLException e) {
-                //todo
-                e.printStackTrace();
+                com.carpediemsolution.dailynotes.utils.Log.v(" error".concat(e.toString()));
             }
         }
         return taskList;

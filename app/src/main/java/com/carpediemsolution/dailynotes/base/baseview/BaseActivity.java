@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.base.base_view;
+package com.carpediemsolution.dailynotes.base.baseview;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -26,16 +26,15 @@ public abstract class BaseActivity extends MvpAppCompatActivity implements BaseV
     @Override
     public void showLoading() {
         progressDialog = ProgressDialog.show(this, "", getString(R.string.progress_loading), true);
-        progressDialog.setCancelable(true);
-        // progressDialog.setCanceledOnTouchOutside(true);
+        setCancelableProgressDialog();
     }
 
     @Override
     public void showLoading(@NonNull String loadingText) {
         progressDialog = ProgressDialog.show(this, "", loadingText, true);
-        progressDialog.setCancelable(true);
-        // progressDialog.setCanceledOnTouchOutside(true);
+        setCancelableProgressDialog();
     }
+
 
     @Override
     public void showStopLoading() {
@@ -62,5 +61,10 @@ public abstract class BaseActivity extends MvpAppCompatActivity implements BaseV
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
+    }
+
+    private void setCancelableProgressDialog() {
+        progressDialog.setCancelable(true);
+        progressDialog.setCanceledOnTouchOutside(true);
     }
 }

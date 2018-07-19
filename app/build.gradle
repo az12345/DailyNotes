@@ -120,6 +120,8 @@ dependencies {
     androidTestImplementation "com.google.dexmaker:dexmaker:1.2"
     androidTestImplementation "com.google.dexmaker:dexmaker-mockito:1.2"
 
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
 
     /* support */
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'

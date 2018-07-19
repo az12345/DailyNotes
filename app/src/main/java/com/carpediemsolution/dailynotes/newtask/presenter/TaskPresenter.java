@@ -19,7 +19,7 @@ public class TaskPresenter extends BasePresenter<TaskView> implements TaskLoader
 
     public void saveTask(String taskData) {
 
-        if (taskData != null && !("").equals(taskData)) {
+        if (taskData != null && !"".equals(taskData)) {
             taskInteractor.loadAllItems(taskData, this);
 
 

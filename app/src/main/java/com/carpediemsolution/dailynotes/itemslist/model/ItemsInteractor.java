@@ -18,11 +18,23 @@ public class ItemsInteractor implements ItemsInteractorImpl {
         try {
             tasks = HelperFactory.getAllTasks();
         } catch (SQLException e) {
+            loaderListener.onError();
             Log.v("sql ex!".concat(e.toString()));
         }
 
-        if (tasks !=null) {
+        if (tasks != null && tasks.size() > 0) {
             loaderListener.onFinished(tasks);
+        }
+    }
+
+    @Override
+    public void deleteItem(@NonNull LoaderListener loaderListener, int idTask) {
+        try {
+            HelperFactory.deleteItem(idTask);
+            loaderListener.onDeletedSuccessfully();
+        } catch (SQLException e) {
+            loaderListener.onError();
+            e.printStackTrace();
         }
     }
 }
