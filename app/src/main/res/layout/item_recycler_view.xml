@@ -54,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/margin_4dp"
                 android:layout_below="@+id/date_item_text_view"
-                android:textColor="@color/colorGrey"
+                android:textColor="@color/colorGray"
                 android:textSize="@dimen/text_subheading" />
 
             <ImageView
@@ -68,22 +68,24 @@
             <ImageView
                 android:id="@+id/edit_item"
                 android:src="@drawable/ic_action_edit_note"
-                android:layout_marginLeft="@dimen/margin_4dp"
-                android:layout_marginRight="@dimen/margin_4dp"
-                android:layout_width="@dimen/margin_18dp"
-                android:layout_height="@dimen/margin_18dp"
+                android:tint="@color/colorGray"
+                android:padding="@dimen/margin_4dp"
+                android:layout_width="@dimen/margin_28dp"
+                android:layout_height="@dimen/margin_28dp"
                 android:layout_below="@+id/loaded_image"
-                android:layout_alignParentLeft="true"  />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <ImageView
                 android:id="@+id/delete_item"
                 android:src="@drawable/ic_action_delete_note"
-                android:layout_marginLeft="@dimen/margin_4dp"
-                android:layout_marginRight="@dimen/margin_4dp"
-                android:layout_width="@dimen/margin_20dp"
-                android:layout_height="@dimen/margin_20dp"
+                android:tint="@color/colorGray"
+                android:padding="@dimen/margin_4dp"
+                android:layout_width="@dimen/margin_28dp"
+                android:layout_height="@dimen/margin_28dp"
                 android:layout_below="@+id/loaded_image"
-                android:layout_toRightOf="@id/edit_item" />
+                android:layout_toRightOf="@id/edit_item"
+                android:layout_toEndOf="@id/edit_item" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

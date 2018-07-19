@@ -48,7 +48,7 @@
                         android:layout_height="match_parent"
                         android:gravity="start"
                         android:hint=""
-                        android:textColor="@color/colorGrey"
+                        android:textColor="@color/colorGray"
                         android:textCursorDrawable="@drawable/cursor"
                         android:textSize="@dimen/text_heading"
                         android:theme="@style/EditStyle" />

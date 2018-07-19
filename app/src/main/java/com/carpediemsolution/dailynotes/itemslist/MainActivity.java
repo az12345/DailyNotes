@@ -1,6 +1,8 @@
 package com.carpediemsolution.dailynotes.itemslist;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,15 +12,25 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-
 import com.carpediemsolution.dailynotes.R;
+import com.carpediemsolution.dailynotes.utils.Log;
 import com.carpediemsolution.dailynotes.utils.OnBackListener;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private ItemsFragment itemsFragment;
+    private static final String ITEMS_FRAGMENT = "items_fragment";
+    public static final int REQUEST_CODE = 1;
+
+    private OnAddItemListener listener;
+
+    public void setOnAddItemListener(OnAddItemListener listener) {
+        this.listener = listener;
+    }
+
+    public static Intent newInstance(Activity activity) {
+        return new Intent(activity, MainActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +42,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTaskListFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (itemsFragment == null) {
-            itemsFragment = new ItemsFragment();
-            fragmentManager.beginTransaction()
-                    .add(R.id.fromCont, itemsFragment)
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(ITEMS_FRAGMENT);
+        if (fragment == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fromCont, ItemsFragment.newInstance(), ITEMS_FRAGMENT)
                     .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .attach(fragment)
+                    .commit();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.v(" item added! " + requestCode);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                listener.onItemAdded();
+            }
         }
     }
 
@@ -76,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(event);
     }
+
+    public interface OnAddItemListener {
+        void onItemAdded();
+    }
+
 
     //todo
     /***

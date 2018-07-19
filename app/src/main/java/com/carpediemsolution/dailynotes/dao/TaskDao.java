@@ -44,8 +44,7 @@ public class TaskDao extends BaseDaoImpl<Task, Integer> {
 
     public List<Task> getAllTasksBySearchString(String string) throws SQLException {
         PreparedQuery preparedQuery = this.queryBuilder().where()
-                .like(FIELD_DATA, "%" + string + "%").prepare();
-
+                .like(FIELD_DATA, "%".concat(string).concat("%")).prepare();
         return this.query(preparedQuery);
     }
 
@@ -60,7 +59,7 @@ public class TaskDao extends BaseDaoImpl<Task, Integer> {
     public List<Task> getAllTasksBySearchStringOrderedByChecked(String string) throws SQLException {
         PreparedQuery preparedQuery = this.queryBuilder()
                 .orderBy("done", true).where()
-                .like(FIELD_DATA, "%" + string + "%").prepare();
+                .like(FIELD_DATA, "%".concat(string).concat("%")).prepare();
 
         return this.query(preparedQuery);
     }

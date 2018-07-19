@@ -12,7 +12,6 @@ public final class Constants {
     public static final int EMPTY_VIEW = 1;
 
 
-    public static final String SORT ="sort";
 
     public static final String TASK_ID = "task_id";
 

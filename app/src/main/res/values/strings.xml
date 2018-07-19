@@ -8,5 +8,6 @@
     <string name="edit">РЕДАКТИРОВАТЬ</string>
     <string name="progress_loading">Загрузка...</string>
     <string name="smth_went_wrong">Что-то пошло не так!</string>
+    <string name="error_deleting">Error while deleting item!</string>
 
 </resources>

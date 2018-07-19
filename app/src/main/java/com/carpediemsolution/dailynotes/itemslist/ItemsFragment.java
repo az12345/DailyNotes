@@ -19,9 +19,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.carpediemsolution.dailynotes.base.base_view.BaseFragment;
-import com.carpediemsolution.dailynotes.newtask.AddTaskActivity;
+import com.carpediemsolution.dailynotes.app.App;
+import com.carpediemsolution.dailynotes.base.baseview.BaseFragment;
 import com.carpediemsolution.dailynotes.R;
+import com.carpediemsolution.dailynotes.newtask.AddTaskActivity;
+import com.carpediemsolution.dailynotes.utils.Log;
 import com.carpediemsolution.dailynotes.utils.view.UserSettingActivity;
 import com.carpediemsolution.dailynotes.adapter.ItemsAdapter;
 import com.carpediemsolution.dailynotes.model.Task;
@@ -39,14 +41,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.carpediemsolution.dailynotes.itemslist.MainActivity.REQUEST_CODE;
 
 /**
  * Created by Юлия on 24.05.2017.
  */
 
-public class ItemsFragment extends BaseFragment implements TaskSearchView, ItemsView {
+public class ItemsFragment extends BaseFragment implements TaskSearchView,
+        ItemsView, MainActivity.OnAddItemListener, ItemsAdapter.OnDeleteItemListener{
 
-   private final String TAG = ItemsFragment.class.getSimpleName();
+    private final String TAG = ItemsFragment.class.getSimpleName();
+
+    private MainActivity activity;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -70,23 +76,36 @@ public class ItemsFragment extends BaseFragment implements TaskSearchView, Items
         addNewTask();
     }
 
+    public static ItemsFragment newInstance() {
+        return new ItemsFragment();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(mToolbar);
-        this.setHasOptionsMenu(true);
+        activity = (MainActivity) getActivity();
 
-        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
-        setSearchEditTextListener();
+        if (activity != null)
+            activity.setOnAddItemListener(this);
+
+        initViews();
 
         itemsPresenter.init();
         itemsPresenter.getItems();
 
         return view;
     }
+
+    private void initViews() {
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(mToolbar);
+        this.setHasOptionsMenu(true);
+
+        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
+        setSearchEditTextListener();
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -98,7 +117,11 @@ public class ItemsFragment extends BaseFragment implements TaskSearchView, Items
     @Override
     public void showItems(List<Task> tasks) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ItemsAdapter(tasks);
+        if (adapter == null){
+            adapter = new ItemsAdapter(tasks);
+        adapter.setOnDeleteItemListener(this);}
+        else adapter.setData(tasks);
+
     }
 
 
@@ -111,16 +134,22 @@ public class ItemsFragment extends BaseFragment implements TaskSearchView, Items
 
     private void setSearchEditTextListener() {
         searchEditText.setOnFocusChangeListener((View v, boolean hasFocus) -> {
-            if (hasFocus)
+            if (hasFocus) {
                 searchEditText.setHint("");
-            else
-                searchEditText.setHint(getActivity().getResources().getString(R.string.app_name));
+            } else {
+                searchEditText.setHint(App.getAppContext().getResources().getString(R.string.app_name));
+            }
         });
     }
 
     private void addNewTask() {
-        Intent intent = new Intent(getActivity(), AddTaskActivity.class);
-        startActivity(intent);
+        getActivity().startActivityForResult(AddTaskActivity.newInstance(getActivity()), REQUEST_CODE);
+    }
+
+    @Override
+    public void onItemAdded() {
+        Log.v("Item added successfully!");
+        itemsPresenter.getItems();
     }
 
     /* base */
@@ -147,5 +176,10 @@ public class ItemsFragment extends BaseFragment implements TaskSearchView, Items
         super.onDestroy();
         taskSearchPresenter.disposeObservable();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onItemDeleted(int idTask) {
+        itemsPresenter.deleteItem(idTask);
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+        android:src="@drawable/ic_sentiment_satisfied"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:tint="@color/colorGray"
+        android:layout_width="@dimen/splash_image_size"
+        android:layout_height="@dimen/splash_image_size" />
+
+</RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes.base.base_view;
+package com.carpediemsolution.dailynotes.base.baseview;
 
 import android.support.annotation.NonNull;
 import com.arellomobile.mvp.MvpView;

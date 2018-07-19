@@ -35,10 +35,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private List<Task> tasks;
 
-
     public ItemsAdapter(List<Task> tasks) {
         this.tasks = tasks;
     }
+
+    public void setData(List<Task> tasks){
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
+
+    public void setOnDeleteItemListener(OnDeleteItemListener onDeleteItemListener) {
+        this.onDeleteItemListener = onDeleteItemListener;
+    }
+
+    OnDeleteItemListener onDeleteItemListener;
 
     private class EmptyViewHolder extends RecyclerView.ViewHolder {
         private EmptyViewHolder(View itemView) {
@@ -50,7 +60,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private CardView cardView;
         private TextView dateTextView, taskTextView;
         private CheckBox doneCheckBox;
-        private ImageView imageView, editImageView, deleteImageView;
+        private ImageView imageView, editBtn, deleteBtn;
 
         private TaskHolder(View itemView) {
             super(itemView);
@@ -61,18 +71,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             taskTextView = itemView.findViewById(R.id.task_item_text_view);
             doneCheckBox = itemView.findViewById(R.id.task_checked);
             imageView = itemView.findViewById(R.id.loaded_image);
-            editImageView = itemView.findViewById(R.id.edit_item);
-            deleteImageView = itemView.findViewById(R.id.delete_item);
+            editBtn = itemView.findViewById(R.id.edit_item);
+            deleteBtn = itemView.findViewById(R.id.delete_item);
 
             doneCheckBox.setOnClickListener(v -> todo());
             imageView.setOnClickListener(v -> todo());
-            editImageView.setOnClickListener(v -> todo());
-            deleteImageView.setOnClickListener(v -> todo());
+            editBtn.setOnClickListener(v -> todo());
         }
-    }
-
-    private void todo() {
-
     }
 
     @Override
@@ -113,6 +118,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             vh.dateTextView.setText(DateFormat.format("dd.MM.yyyy, HH:mm", task.getDate()));
             vh.taskTextView.setText(task.getData());
             vh.doneCheckBox.setChecked(task.isDone());
+
+            vh.deleteBtn.setOnClickListener(v -> deleteItem(task.getId()));
+
             if (task.getImageUri() != null) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(350, 350);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
@@ -138,6 +146,18 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         Collections.shuffle(colors);
         return colors.get(0);
+    }
+
+    private void todo() {
+
+    }
+
+    private void deleteItem(int idItem) {
+        onDeleteItemListener.onItemDeleted(idItem);
+    }
+
+    public interface OnDeleteItemListener {
+        void onItemDeleted(int idTask);
     }
 
    /* private void onClickCheckBox() {
