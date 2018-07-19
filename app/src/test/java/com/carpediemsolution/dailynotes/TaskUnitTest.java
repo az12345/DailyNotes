@@ -26,6 +26,8 @@ public class TaskUnitTest {
         date = new Date();
     }
 
+    /** тест проверяет эквивалентность даты принадлежащей объекту класса Task текущей дате
+     * */
     @Test
     public void initTaskObject() throws Exception {
         assertEquals(date, task.getDate());

@@ -71,7 +71,8 @@
             android:layout_alignParentRight="true"
             android:layout_margin="17dp"
             android:clickable="true"
-            android:src="@drawable/ic_action_write_blue"
+            android:src="@drawable/ic_action_write"
+            android:tint="@color/colorGray"
             app:borderWidth="0dp"
             app:elevation="0dp"
             app:layout_anchorGravity="bottom|end" />
@@ -83,7 +84,8 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="17dp"
             android:layout_toLeftOf="@+id/fab_write"
-            android:src="@drawable/ic_action_add_blue"
+            android:src="@drawable/ic_action_add"
+            android:tint="@color/colorGray"
             app:borderWidth="0dp"
             app:elevation="0dp" />
     </RelativeLayout>

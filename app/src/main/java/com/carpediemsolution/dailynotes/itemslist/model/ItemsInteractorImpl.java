@@ -8,4 +8,6 @@ public interface ItemsInteractorImpl {
     void loadAllItems(@NonNull LoaderListener loaderListener);
 
     void deleteItem(@NonNull LoaderListener loaderListener, int idItem);
+
+
 }

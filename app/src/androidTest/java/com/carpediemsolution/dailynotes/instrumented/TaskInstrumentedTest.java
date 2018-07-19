@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes;
+package com.carpediemsolution.dailynotes.instrumented;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -20,7 +20,7 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Instrumentation test, which will execute on an Android device.
  *
- * создание и запись экземпляра класса Task
+ * создание и запись экземпляра класса Task в базу данных
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest

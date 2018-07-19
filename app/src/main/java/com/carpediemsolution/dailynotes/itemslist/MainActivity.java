@@ -20,7 +20,8 @@ import com.carpediemsolution.dailynotes.utils.OnBackListener;
 public class MainActivity extends AppCompatActivity {
 
     private static final String ITEMS_FRAGMENT = "items_fragment";
-    public static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE_ADD = 1;
+    public static final int REQUEST_CODE_EDIT = 2;
 
     private OnAddItemListener listener;
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         Log.v(" item added! " + requestCode);
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE_ADD) {
             if (resultCode == RESULT_OK) {
                 listener.onItemAdded();
             }

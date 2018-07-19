@@ -1,4 +1,4 @@
-package com.carpediemsolution.dailynotes;
+package com.carpediemsolution.dailynotes.mockito;
 
 import android.content.Context;
 
@@ -15,12 +15,12 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoUriTest {
 
-    UriValidator uriValidator;
-    Context mockContext;
+    private UriValidator uriValidator;
+    private Context mockContext;
     private String photoUri;
 
     @Before
-    void setUp(){
+    public void setUp(){
         mockContext = Mockito.mock(Context.class);
         uriValidator = new UriValidator(mockContext);
     }

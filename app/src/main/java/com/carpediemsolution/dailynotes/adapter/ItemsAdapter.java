@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.carpediemsolution.dailynotes.R;
 import com.carpediemsolution.dailynotes.model.Task;
-import com.carpediemsolution.dailynotes.utils.Constants;
+import com.carpediemsolution.dailynotes.utils.Constant;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.carpediemsolution.dailynotes.utils.Constants.EMPTY_VIEW;
+import static com.carpediemsolution.dailynotes.utils.Constant.EMPTY_VIEW;
 
 /**
  * Created by Юлия on 30.05.2017.
@@ -39,16 +39,21 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.tasks = tasks;
     }
 
-    public void setData(List<Task> tasks){
+    public void setData(List<Task> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
     }
+
+    private OnDeleteItemListener onDeleteItemListener;
+    private OnEditItemListener onEditItemListener;
 
     public void setOnDeleteItemListener(OnDeleteItemListener onDeleteItemListener) {
         this.onDeleteItemListener = onDeleteItemListener;
     }
 
-    OnDeleteItemListener onDeleteItemListener;
+    public void setOnEditItemListener(OnEditItemListener onEditItemListener) {
+        this.onEditItemListener = onEditItemListener;
+    }
 
     private class EmptyViewHolder extends RecyclerView.ViewHolder {
         private EmptyViewHolder(View itemView) {
@@ -76,7 +81,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             doneCheckBox.setOnClickListener(v -> todo());
             imageView.setOnClickListener(v -> todo());
-            editBtn.setOnClickListener(v -> todo());
+
         }
     }
 
@@ -120,14 +125,17 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             vh.doneCheckBox.setChecked(task.isDone());
 
             vh.deleteBtn.setOnClickListener(v -> deleteItem(task.getId()));
+            vh.editBtn.setOnClickListener(v -> editItem(task.getId()));
 
             if (task.getImageUri() != null) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(350, 350);
                 params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
                 params.addRule(RelativeLayout.BELOW, R.id.task_item_text_view);
                 vh.imageView.setLayoutParams(params);
+
                 Picasso.with(context)
                         .load(new File(task.getImageUri()))
+                        .error(R.drawable.image_not_found)
                         .into(vh.imageView);
             }
         }
@@ -135,14 +143,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     private String generateItemColor() {
-        List<String> colors = Arrays.asList(Constants.colorOne,
-                Constants.colorTwo,
-                Constants.colorThree,
-                Constants.colorFour,
-                Constants.colorFive,
-                Constants.colorSix,
-                Constants.colorSeven,
-                Constants.colorEight);
+        List<String> colors = Arrays.asList(Constant.colorOne,
+                Constant.colorTwo,
+                Constant.colorThree,
+                Constant.colorFour,
+                Constant.colorFive,
+                Constant.colorSix,
+                Constant.colorSeven,
+                Constant.colorEight);
 
         Collections.shuffle(colors);
         return colors.get(0);
@@ -156,8 +164,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         onDeleteItemListener.onItemDeleted(idItem);
     }
 
+    private void editItem(int idItem) { onEditItemListener.onItemEdited(idItem); }
+
     public interface OnDeleteItemListener {
-        void onItemDeleted(int idTask);
+        void onItemDeleted(int idItem);
+    }
+
+    public interface OnEditItemListener {
+        void onItemEdited(int idItem);
     }
 
    /* private void onClickCheckBox() {

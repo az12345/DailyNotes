@@ -34,12 +34,15 @@
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical|start"
                     android:drawableRight="@drawable/ic_action_search"
+                    android:drawableTint="@color/colorWhite"
                     android:drawablePadding="5dp"
                     android:hint="@string/app_name"
                     android:textCursorDrawable="@drawable/cursor"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/text_heading"
-                    android:theme="@style/EditStyleForSearch" />
+                    android:theme="@style/EditStyleForSearch"
+                    android:layout_alignParentEnd="true"
+                    android:drawableEnd="@drawable/ic_action_search" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 <RelativeLayout
@@ -69,7 +72,9 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="17dp"
         android:clickable="true"
-        android:src="@drawable/ic_action_add"/>
+        android:src="@drawable/ic_action_add"
+        android:tint="@color/colorWhite"
+        android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

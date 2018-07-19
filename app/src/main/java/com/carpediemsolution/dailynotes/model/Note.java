@@ -42,7 +42,6 @@ public class Note extends AbstractItem {
         super.setId(id);
     }
 
-
     @Override
     public void setDate(Date date) {
         super.setDate(date);

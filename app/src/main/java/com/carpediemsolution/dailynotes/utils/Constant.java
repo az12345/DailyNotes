@@ -4,7 +4,7 @@ package com.carpediemsolution.dailynotes.utils;
  * Created by Юлия on 23.08.2017.
  */
 
-public final class Constants {
+public final class Constant {
 
     public static final int TYPE_NOTE = 1;
     public static final int TYPE_TASK = 2;
@@ -13,7 +13,7 @@ public final class Constants {
 
 
 
-    public static final String TASK_ID = "task_id";
+    public static final String ITEM_ID = "item_id";
 
     public static final String colorOne = "#f2faf3";
     public static final String colorTwo = "#fffaf0";

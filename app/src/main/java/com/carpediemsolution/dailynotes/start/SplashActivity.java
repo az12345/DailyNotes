@@ -15,14 +15,14 @@ import java.lang.ref.WeakReference;
 public class SplashActivity extends AppCompatActivity {
 
     private static final int START_APP = 0;
-    private final StartAppHandler mHandler = new StartAppHandler(this);
+    private final StartAppHandler handler = new StartAppHandler(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mHandler.postDelayed(() -> mHandler.sendEmptyMessage(START_APP), 1000);
+        handler.postDelayed(() -> handler.sendEmptyMessage(START_APP), 1000);
     }
 
     private static class StartAppHandler extends Handler {

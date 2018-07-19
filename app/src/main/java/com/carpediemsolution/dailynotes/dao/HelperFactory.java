@@ -36,7 +36,7 @@ public class HelperFactory {
         return HelperFactory.getHelper().getTaskDAO().create(task);
     }
 
-    public Task getTaskById(int id) throws SQLException {
+    public static Task getTaskById(int id) throws SQLException {
         return HelperFactory.getHelper().getTaskDAO().queryForId(id);
     }
 

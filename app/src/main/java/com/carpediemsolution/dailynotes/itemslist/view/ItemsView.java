@@ -8,4 +8,5 @@ import java.util.List;
 public interface ItemsView extends BaseView {
 
     void showItems(List<Task> tasks);
+
 }

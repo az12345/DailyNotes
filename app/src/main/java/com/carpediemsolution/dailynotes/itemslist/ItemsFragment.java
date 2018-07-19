@@ -41,14 +41,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.carpediemsolution.dailynotes.itemslist.MainActivity.REQUEST_CODE;
+import static com.carpediemsolution.dailynotes.itemslist.MainActivity.REQUEST_CODE_ADD;
+import static com.carpediemsolution.dailynotes.itemslist.MainActivity.REQUEST_CODE_EDIT;
 
 /**
  * Created by Юлия on 24.05.2017.
  */
 
 public class ItemsFragment extends BaseFragment implements TaskSearchView,
-        ItemsView, MainActivity.OnAddItemListener, ItemsAdapter.OnDeleteItemListener{
+        ItemsView, MainActivity.OnAddItemListener, ItemsAdapter.OnDeleteItemListener, ItemsAdapter.OnEditItemListener {
 
     private final String TAG = ItemsFragment.class.getSimpleName();
 
@@ -117,11 +118,11 @@ public class ItemsFragment extends BaseFragment implements TaskSearchView,
     @Override
     public void showItems(List<Task> tasks) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (adapter == null){
+        if (adapter == null) {
             adapter = new ItemsAdapter(tasks);
-        adapter.setOnDeleteItemListener(this);}
-        else adapter.setData(tasks);
-
+            adapter.setOnDeleteItemListener(this);
+            adapter.setOnEditItemListener(this);
+        } else adapter.setData(tasks);
     }
 
 
@@ -143,7 +144,8 @@ public class ItemsFragment extends BaseFragment implements TaskSearchView,
     }
 
     private void addNewTask() {
-        getActivity().startActivityForResult(AddTaskActivity.newInstance(getActivity()), REQUEST_CODE);
+        if (getActivity() != null)
+            getActivity().startActivityForResult(AddTaskActivity.newInstance(getActivity()), REQUEST_CODE_ADD);
     }
 
     @Override
@@ -181,5 +183,10 @@ public class ItemsFragment extends BaseFragment implements TaskSearchView,
     @Override
     public void onItemDeleted(int idTask) {
         itemsPresenter.deleteItem(idTask);
+    }
+
+    @Override
+    public void onItemEdited(int idItem) {
+        startActivityForResult(AddTaskActivity.newInstance(getActivity(), idItem), REQUEST_CODE_EDIT);
     }
 }

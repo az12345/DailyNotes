@@ -8,7 +8,6 @@ import com.carpediemsolution.dailynotes.model.Task;
 import com.carpediemsolution.dailynotes.itemslist.model.ItemsInteractor;
 import com.carpediemsolution.dailynotes.itemslist.model.LoaderListener;
 import com.carpediemsolution.dailynotes.itemslist.view.ItemsView;
-
 import java.util.List;
 
 @InjectViewState
@@ -39,7 +38,9 @@ public class ItemsPresenter extends BasePresenter<ItemsView> implements LoaderLi
         getViewState().showError(App.getAppContext().getString(R.string.error_deleting));
     }
 
+
     public void deleteItem(int idTask) {
         itemsIteractor.deleteItem(this, idTask);
     }
+
 }

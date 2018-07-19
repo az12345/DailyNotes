@@ -1,7 +1,7 @@
 package com.carpediemsolution.dailynotes.model;
 
-import static com.carpediemsolution.dailynotes.utils.Constants.TYPE_NOTE;
-import static com.carpediemsolution.dailynotes.utils.Constants.TYPE_TASK;
+import static com.carpediemsolution.dailynotes.utils.Constant.TYPE_NOTE;
+import static com.carpediemsolution.dailynotes.utils.Constant.TYPE_TASK;
 
 public class ItemFactory {
 
