@@ -1,6 +1,5 @@
 package com.carpediemsolution.dailynotes.adapter;
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -21,7 +20,6 @@ import com.carpediemsolution.dailynotes.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +35,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private List<Task> tasks;
 
+
     public ItemsAdapter(List<Task> tasks) {
         this.tasks = tasks;
     }
@@ -49,12 +48,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private class TaskHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
-        private TextView dateTextView;
-        private TextView taskTextView;
+        private TextView dateTextView, taskTextView;
         private CheckBox doneCheckBox;
-        private ImageView imageView;
-        private ImageView editImageView;
-        private ImageView deleteImageView;
+        private ImageView imageView, editImageView, deleteImageView;
 
         private TaskHolder(View itemView) {
             super(itemView);
@@ -96,16 +92,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v;
 
-        if (viewType == EMPTY_VIEW) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.empty_view, parent, false);
-            return new EmptyViewHolder(v);
-        } else {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_view, parent, false);
-            return new TaskHolder(v);
-        }
+        return viewType == EMPTY_VIEW ?
+                new EmptyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.empty_view, parent, false)) :
+                new TaskHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_view, parent, false));
+
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vho, int position) {

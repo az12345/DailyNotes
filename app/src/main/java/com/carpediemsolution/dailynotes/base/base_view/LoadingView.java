@@ -1,7 +1,6 @@
 package com.carpediemsolution.dailynotes.base.base_view;
 
 import android.support.annotation.NonNull;
-
 import com.arellomobile.mvp.MvpView;
 
 public interface LoadingView extends MvpView {

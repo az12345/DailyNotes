@@ -18,9 +18,11 @@ public class ItemsInteractor implements ItemsInteractorImpl {
         try {
             tasks = HelperFactory.getAllTasks();
         } catch (SQLException e) {
-            Log.v("sql ex!" + e.toString());
+            Log.v("sql ex!".concat(e.toString()));
         }
-        if(tasks !=null)
-        loaderListener.onFinished(tasks);
+
+        if (tasks !=null) {
+            loaderListener.onFinished(tasks);
+        }
     }
 }

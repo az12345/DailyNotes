@@ -12,7 +12,7 @@ import com.carpediemsolution.dailynotes.R;
 public abstract class BaseFragment extends MvpAppCompatFragment implements BaseView {
 
     private Activity activity;
-    public ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
 
     @Override

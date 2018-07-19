@@ -39,7 +39,7 @@ public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
 
     public void init(EditText editText){
 
-        DisposableObserver observer = new DisposableObserver<TextViewTextChangeEvent>() {
+        DisposableObserver<TextViewTextChangeEvent> observer = new DisposableObserver<TextViewTextChangeEvent>() {
             @Override
             public void onComplete() {
                 Log.e(LOG_TAG, "---onComplete");
@@ -56,7 +56,7 @@ public class TaskSearchPresenter extends MvpPresenter<TaskSearchView> {
                  getViewState().updateItems(taskList);
             }
         };
-       //
+
         disposable  = //Disposable
                 RxTextView.textChangeEvents(editText) //реагирует на изменение в эдиттекст EditText
                         .debounce(400, TimeUnit.MILLISECONDS) // default Scheduler is Computation

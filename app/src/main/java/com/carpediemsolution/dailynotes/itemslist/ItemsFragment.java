@@ -46,7 +46,7 @@ import butterknife.Unbinder;
 
 public class ItemsFragment extends BaseFragment implements TaskSearchView, ItemsView {
 
-   // private final String TAG = ItemsFragment.class.getSimpleName();
+   private final String TAG = ItemsFragment.class.getSimpleName();
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;

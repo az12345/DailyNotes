@@ -1,6 +1,5 @@
 package com.carpediemsolution.dailynotes.itemslist.view;
 
-
 import com.arellomobile.mvp.MvpView;
 import com.carpediemsolution.dailynotes.model.Task;
 
